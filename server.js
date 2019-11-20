@@ -1,13 +1,11 @@
 const express = require('express')
 const app = express();
-const router = express.Router();
 const port = process.env.PORT || 5000
 require('dotenv').config();
 const mongoose = require('mongoose');
 const db = mongoose.connection;
 const host = process.env.CLUSTER
 const dbupdateobject = { useNewUrlParser:true, useUnifiedTopology:true, useFindAndModify:false , useCreateIndex: true};
-const moment = require('moment');
 const bcrypt = require('bcryptjs');
 const session = require('express-session');
 
@@ -28,9 +26,9 @@ app.use(express.json());
 const moviesControl = require('./controllers/moviesController.js');
 const usersControl = require('./controllers/usersController.js');
 const sessionControl = require('./controllers/sessionController.js');
-app.use('/moviesapi', bookmarkControl);
+app.use('/moviesapi', moviesControl);
 app.use('/users', usersControl);
-app.use('/session', sessionControl);
+app.use('/sessions', sessionControl);
 
 /////////////////////
 //DATABASE
