@@ -1,41 +1,65 @@
+// ========================
+// DEPENDENCIES
+// ========================
 const express = require('express')
-const app = express();
-const port = process.env.PORT || 5000
-require('dotenv').config();
 const mongoose = require('mongoose');
-const db = mongoose.connection;
-const host = process.env.CLUSTER
-const dbupdateobject = { useNewUrlParser:true, useUnifiedTopology:true, useFindAndModify:false , useCreateIndex: true};
 const bcrypt = require('bcryptjs');
 const session = require('express-session');
+require('dotenv').config();
 
-/////////////////////
-//MIDDLEWARE
-/////////////////////
+// controllers =============
+const moviesControl = require('./controllers/moviesController.js');
+const usersControl = require('./controllers/usersController.js');
+const sessionControl = require('./controllers/sessionController.js');
+
+
+// ========================
+// GLOBAL CONFIG
+// ========================
+const app = express();
+const db = mongoose.connection;
+const host = process.env.CLUSTER
+const port = process.env.PORT || 5000
+const dbupdateobject = { useNewUrlParser:true, useUnifiedTopology:true, useFindAndModify:false , useCreateIndex: true};
+const mongoURI = host;
+
+// ========================
+// MIDDLEWARE
+// ========================
 // app.use(express.urlencoded({extended:false}));
 app.use(session({
     secret: "iamlikeabird", //some random string
     resave: false,
     saveUninitialized: false
 }));
+
 app.use(express.json());
 
-//////////////////////
-//CONTROLLERS
-///////////////////
-const moviesControl = require('./controllers/moviesController.js');
-const usersControl = require('./controllers/usersController.js');
-const sessionControl = require('./controllers/sessionController.js');
+
+//Static Files ==============
+app.use(express.static('public'));
+
+//Controllers ==============
+
 app.use('/moviesapi', moviesControl);
 app.use('/users', usersControl);
 app.use('/sessions', sessionControl);
 
-/////////////////////
-//DATABASE
-/////////////////////
 
-// Configuration
-const mongoURI = host;
+
+// ========================
+// TEST ROUTE
+// ========================
+app.get('/', (req, res) => {
+  res.send('hello world')
+})
+
+
+// ========================
+// CONNECTION
+// ========================
+
+//DATABASE ==============
 
 // Connect to Mongo
 mongoose.connect( mongoURI, dbupdateobject );
@@ -56,13 +80,5 @@ db.on( 'open' , ()=>{
 
 
 
-/////////////////////
-//Listener
-/////////////////////
+//LISTENER ==============
 app.listen(port, () => console.log(`listening on ${port}!`))
-
-
-/////////////////////
-//Static Files
-/////////////////////
-app.use(express.static('public'));
