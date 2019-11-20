@@ -9,6 +9,7 @@ const User = require('../models/users.js')
 // ========================
 // ROUTES
 // ========================
+// route to check if user exists in the database, if does exist, checks for password match
 router.post('/', (req, res) => {
   User.findOne( {username: req.body.username}, (error, foundUser) => {
     if(foundUser === null){
@@ -29,10 +30,12 @@ router.post('/', (req, res) => {
   })
 })
 
+//route to check if a session exists aka if the user is logged in
 router.get('/', (req, res) => {
   res.json(req.session.user)
 })
 
+//logout route
 router.delete('/', (req, res) => {
   req.session.destroy(() => {
     res.json({
