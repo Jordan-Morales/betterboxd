@@ -17,18 +17,17 @@ app.controller('MainController', ['$http', function($http){
   //validates for showing the movie list after clicking to search by name
   this.showMovieList = false
 
+  // for prior ES6 functions to be able to use this.
+  controller = this;
+
+  // setting for session validation
+  this.loggedInUsername = null;
+
+  // for user's name 
+  this.loggedInName = null;
   // ======= API CALLS ====================
 
   // --- Users+Session Datapoint
-  /////////////////////////////////
-  //Add the below variables and functions
-  //to app.js in the controller
-  /////////////////////////////////
-
-  controller = this;
-  this.loggedInUsername = null;
-  this.loggedInName = null;
-
   //////////////////
   //Authentication Functions
   //This function gets the username of the user currently in session, then fetches data
