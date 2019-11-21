@@ -1,0 +1,26 @@
+<div ng-init="main.displayApp(main.getMovies)">
+    <h1 ng-if="!main.loggedInUsername">Sign Up/Login</h1>
+
+
+    <div class="formbar" ng-if="!main.loggedInUsername">
+        <form ng-submit="main.createUser()">
+            <h2>Create User</h2>
+            <input type="text" ng-model="main.createname" />
+            <input type="text" ng-model="main.createusername" />
+            <input type="password" ng-model="main.createpassword" />
+            <input type="submit" value="Create User">
+        </form>
+
+
+        <form ng-submit="main.logIn(main.getMovies)">
+            <h2>Log In</h2>
+            <input type="text" ng-model="main.username" />
+            <input type="password" ng-model="main.password" />
+            <input type="submit" value="Log In">
+        </form>
+    </div>
+    <div class="formbar">
+        <form ng-submit="main.logOut(main.clearData)" ng-if="main.loggedInUsername">
+            <input type="submit" value="Logout">
+        </form>
+    </div>
