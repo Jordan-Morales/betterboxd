@@ -13,8 +13,8 @@ movies.get('/', (req, res) => {
 
 // SHOW / GET BY ID
 // used to access each movie and the contained comments
-movies.get('/movie/:id', (req, res) => {
-  Movie.findById(req.params.id, (error, foundMovie) => {
+movies.get('/:id', (req, res) => {
+  Movie.find({omdbID:req.params.id}, (error, foundMovie) => {
     res.json(foundMovie);
   });
 });
@@ -35,7 +35,7 @@ movies.delete('/:id', (req, res) => {
 
 // UPDATE
 movies.put('/:id', (req, res) => {
-  Movie.findByIdAndUpdate(req.params.id, req.body, {new:true}, (error, updatedMovie) => {
+  Movie.findOneAndUpdate({omdbID:req.params.id}, req.body, {new:true}, (error, updatedMovie) => {
     res.json(updatedMovie);
   });
 });
