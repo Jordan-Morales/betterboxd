@@ -5,9 +5,9 @@
     <div class="formbar" ng-if="!ctrl.loggedInUsername">
         <form ng-submit="ctrl.createUser()">
             <h2>Create User</h2>
-            <input type="text" ng-model="ctrl.createname" />
-            <input type="text" ng-model="ctrl.createusername" />
-            <input type="password" ng-model="ctrl.createpassword" />
+            <input type="text" ng-model="ctrl.createname" placeholder="name"/>
+            <input type="text" ng-model="ctrl.createusername" placeholder="username"/>
+            <input type="password" ng-model="ctrl.createpassword" placeholder="password"/>
             <input type="submit" value="Create User">
         </form>
 
