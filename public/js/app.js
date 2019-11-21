@@ -155,15 +155,25 @@ app.controller('MainController', ['$http', function($http){
       method:'GET',
       url: 'http://www.omdbapi.com/?apikey=53aa2cd6&i='+movieId
     }).then( response =>{
-      this.movieInfo = response.data
-      console.log(this.movieInfo);
+      this.movieInfo = response.data;
+      this.getComment(movieId);
+      // console.log(this.movieInfo);
     }, error => {
       console.log(error);
     })
     this.showMovieInfo = true;
-
   }
-
+  this.getComment = (movieId) => {
+    $http({
+      method:'GET',
+      url:'/moviesapi/'+movieId
+    }).then( response => {
+      this.movieLikes = response.data[0].likes
+      console.log(this.movieLikes);
+      this.movieComments = response.data[0].comment
+      console.log(this.movieComments);
+    })
+  }
   // like movie / unlike movies
 
   // add movie comment
