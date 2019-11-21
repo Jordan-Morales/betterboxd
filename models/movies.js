@@ -8,7 +8,7 @@ const mongoose = require("mongoose")
 // SCHEMA
 // ========================
 const movieSchema = new mongoose.Schema({
-  omdbID: String,
+  omdbID: {type: String, unique:true},
   likes: {type: Number, default: 0},
   comment:[{
     username: String,
