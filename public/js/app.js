@@ -45,8 +45,10 @@ app.controller('MainController', ['$http', function($http){
     this.movieTitle = ''
   }
 
-  // display specific movie and comments associated
+  // display specific movie and comments associated -- getInfo function calls OMDB API for the movie details.
   this.getInfo = (movieId) => {
+    //turning into false to hide the movie list after clicking
+    this.showMovieList = false
     $http({
       method:'GET',
       url: 'http://www.omdbapi.com/?apikey=53aa2cd6&i='+movieId
@@ -56,7 +58,7 @@ app.controller('MainController', ['$http', function($http){
     }, error => {
       console.log(error);
     })
-    this.showInfo = true;
+    this.showMovieInfo = true;
 
   }
 
