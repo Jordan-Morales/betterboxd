@@ -21,7 +21,9 @@ app.controller('MainController', ['$http', function($http){
   controller = this;
 
   // setting for session validation
+
   this.loggedInUser = null;
+
   // ======= API CALLS ====================
 
   // --- Users+Session Datapoint
@@ -119,7 +121,11 @@ app.controller('MainController', ['$http', function($http){
   //////////////////////
 
   this.clearData = () => {
+
       this.loggedInUser = null;
+      this.showMovieInfo = false
+      this.showMovieList = false
+
   }
 
 
