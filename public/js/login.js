@@ -94,9 +94,18 @@ $http({
     url:'/sessions/'
 }).then(function(response){
     console.log(response);
-    controller.loggedInUsername = null;
     clearFunction();
 }, function(error){
     console.log(error);
 });
+}
+
+//////////////////////
+//Clear Data Function
+//Clear any data upon logout or when needed
+//////////////////////
+
+this.clearData = () => {
+    this.loggedInUsername = null;
+    this.loggedInName = null;
 }
