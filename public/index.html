@@ -1,18 +1,47 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" ng-app="betterboxdApp">
-  <head>
-    <meta charset="utf-8">
-<!-- angular script -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js" charset="utf-8"></script>
-<!-- app.js link -->
-    <script src="/js/app.js" charset="utf-8"></script>
-
-    <title>betterboxd</title>
-  </head>
+<head>
+  <meta charset="utf-8">
+  <!-- angular script -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js" charset="utf-8"></script>
+  <!-- app.js link -->
+  <script src="/js/app.js" charset="utf-8"></script>
+  <!-- our own css file -->
+  <link rel="stylesheet" href="/css/style.css">
+  <title>betterboxd</title>
+</head>
 <!-- body -->
-  <body ng-controller="MainController as ctrl">
-    <div class="container">
-      {{2+2}}
-    </div>
-  </body>
+<body ng-controller="MainController as ctrl">
+  <!-- nav bar should contain search bar, login / signup features (signup will end up showing another section) -->
+  <nav>
+    <!-- search box -->
+    <form ng-submit="ctrl.getMovies(); ctrl.showMovieList = true">
+      <input type="text" placeholder="movie title" ng-model="ctrl.movieTitle">
+      <input type="submit" value="search"></button>
+    </form>
+    <!-- logo -->
+    <!-- subtitle -->
+    <!-- signup / login button -->
+    <!-- login form goes here -->
+  </nav>
+<!-- signup will shift the hot movies down -->
+  <div>
+    <!-- signup -->
+    <!-- user signup form goes here -->
+  </div>
+  <div>
+    <!-- hot movies  -->
+  </div>
+  <div class="container">
+    <!-- this contains the primary app, viewing movies, and comments
+  forms  -->
+    <!-- container with movie search that only pops up after use submit the search -->
+    <div ng-if="ctrl.showMovieList" ng-include="'partials/movieSearch.html'"></div>
+    <!-- container for movie details after clicking a movie title from the movie list -->
+    <div ng-if="ctrl.showMovieInfo" ng-include="'partials/movieDetails.html'"></div>
+    {{2+2}}
+  <footer>
+    <!-- links to our git hubs / linked in's, or link to an about team page? -->
+  </footer>
+</body>
 </html>

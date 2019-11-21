@@ -47,12 +47,12 @@ app.use('/sessions', sessionControl);
 
 
 
-// ========================
-// TEST ROUTE
-// ========================
-app.get('/', (req, res) => {
-  res.send('hello world')
-})
+// // ========================
+// // TEST ROUTE
+// // ========================
+// app.get('/', (req, res) => {
+//   res.send('hello world')
+// })
 
 
 // ========================
