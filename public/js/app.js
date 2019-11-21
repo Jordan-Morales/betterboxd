@@ -21,10 +21,9 @@ app.controller('MainController', ['$http', function($http){
   controller = this;
 
   // setting for session validation
-  this.loggedInUsername = null;
 
-  // for user's name
-  this.loggedInName = null;
+  this.loggedInUser = null;
+
   // ======= API CALLS ====================
 
   // --- Users+Session Datapoint
@@ -39,8 +38,8 @@ app.controller('MainController', ['$http', function($http){
           method:'GET',
           url: '/sessions/'
       }).then(function(response){
-          controller.loggedInUsername = response.data.username;
-          controller.loggedInName = response.data.name;
+          controller.loggedInUser = response.data
+          console.log(controller.loggedInUser)
           getData(response.data.username);
       }, function(){
           console.log('error');
@@ -122,10 +121,11 @@ app.controller('MainController', ['$http', function($http){
   //////////////////////
 
   this.clearData = () => {
-      this.loggedInUsername = null;
-      this.loggedInName = null;
+
+      this.loggedInUser = null;
       this.showMovieInfo = false
       this.showMovieList = false
+
   }
 
 

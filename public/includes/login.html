@@ -1,8 +1,8 @@
 <div ng-init="ctrl.displayApp(ctrl.getMovies)">
-    <h1 ng-if="!ctrl.loggedInUsername">Sign Up/Login</h1>
+    <h1 ng-if="!ctrl.loggedInUser">Sign Up/Login</h1>
 
 
-    <div class="formbar" ng-if="!ctrl.loggedInUsername">
+    <div class="formbar" ng-if="!ctrl.loggedInUser">
         <form ng-submit="ctrl.createUser()">
             <h2>Create User</h2>
             <input type="text" ng-model="ctrl.createname" placeholder="name"/>
@@ -20,7 +20,7 @@
         </form>
     </div>
     <div class="formbar">
-        <form ng-submit="ctrl.logOut(ctrl.clearData)" ng-if="ctrl.loggedInUsername">
+        <form ng-submit="ctrl.logOut(ctrl.clearData)" ng-if="ctrl.loggedInUser">
             <input type="submit" value="Logout">
         </form>
     </div>
