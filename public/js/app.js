@@ -46,6 +46,19 @@ app.controller('MainController', ['$http', function($http){
   }
 
   // display specific movie and comments associated
+  this.getInfo = (movieId) => {
+    $http({
+      method:'GET',
+      url: 'http://www.omdbapi.com/?apikey=53aa2cd6&i='+movieId
+    }).then( response =>{
+      this.movieInfo = response.data
+      console.log(this.movieInfo);
+    }, error => {
+      console.log(error);
+    })
+    this.showInfo = true;
+
+  }
 
   // like movie / unlike movies
 
