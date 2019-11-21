@@ -6,7 +6,7 @@ const Users = require('../models/users.js');
 
 //GET USER ROUTE
 router.get('/', (req, res)=>{
-    Users.find({}, (err, foundUsers)=>{
+    Users.findById({}, (err, foundUsers)=>{
         res.json(foundUsers);
     });
 });
