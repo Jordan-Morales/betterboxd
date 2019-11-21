@@ -23,7 +23,7 @@ app.controller('MainController', ['$http', function($http){
   // setting for session validation
   this.loggedInUsername = null;
 
-  // for user's name 
+  // for user's name
   this.loggedInName = null;
   // ======= API CALLS ====================
 
@@ -124,6 +124,8 @@ app.controller('MainController', ['$http', function($http){
   this.clearData = () => {
       this.loggedInUsername = null;
       this.loggedInName = null;
+      this.showMovieInfo = false
+      this.showMovieList = false
   }
 
 
