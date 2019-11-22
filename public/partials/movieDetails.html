@@ -6,7 +6,7 @@
  <h6> Rated: {{ctrl.movieInfo.Rated}} </h6>
  <h4> Likes: {{ctrl.movieLikes}}</h4>
  <button
-   ng-if="comment.username === ctrl.loggedInUser.username && $index !== ctrl.indexOfEditForm"
+   ng-if="ctrl.loggedInUser"
    ng-click="ctrl.addLikes(ctrl.loggedInUser, ctrl.movieInfo)">
     Like it
   </button>
