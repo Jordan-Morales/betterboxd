@@ -1,3 +1,33 @@
+* {margin: 0; padding: 0; box-sizing: border-box;}
+
+:root {
+    --mustard: #D79922;
+    --ivory: #EFE2BA;
+    --red: #F13C20;
+    --blue: #4056A1;
+    --lightBlue: #C5CBE3;
+
+    --font-main: 'Raleway', sans-serif;
+    --font-title: 'Staatliches', cursive;
+    --font-logo: 'Major Mono Display', monospace;
+}
+
+body {
+    background-color: ghostwhite; font-family: var(--font-main); color: var(--blue);
+}
+
+h1,h2,h3,h4,h5,h6 {font-family: var(--font-title)}
+
+.logo {font-family: var(--font-logo)}
+
+.profile {width: 90%; margin: 10px auto;}
+
+.profile div {}
+
+.profile div img {height: 200px;}
+
+.profile div ul {display: flex; flex-wrap: wrap; font-size: 50%;}
+
 ul{
   list-style: none
 }
