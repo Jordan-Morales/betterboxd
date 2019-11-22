@@ -27,6 +27,8 @@ app.controller('MainController', ['$http', function($http){
   //
   this.indexOfEditForm = null;
 
+  this.profileOn = false
+
   // ======= API CALLS ====================
 
   // --- Users+Session Datapoint
@@ -172,7 +174,8 @@ app.controller('MainController', ['$http', function($http){
       method:'GET',
       url:'/moviesapi/'+movieId
     }).then( response => {
-      this.movieLikes = response.data[0].likes
+      console.log(response.data[0])
+      this.movieLikes = response.data[0].likes || 0
       console.log(this.movieLikes);
       this.movieComments = response.data[0].comment
       console.log(this.movieComments);
@@ -245,10 +248,30 @@ app.controller('MainController', ['$http', function($http){
 
   // edit movie comment
 
+this.addLikes = (user, movieObject) => {
+  console.log(movieObject);
+    $http({
+      method:'PUT',
+      url:'/users/'+ user._id + '/' + movieObject.imdbID,
+      data: {
+        movie: movieObject
+      }
+    }).then( response => {
+        console.log(response);
+        this.getInfo(movieObject.imdbID)
+    })
+  }
 
 
 
+  this.showProfile = () => {
 
+      console.log(controller.profileOn);
+      console.log('toggle');
+      controller.profileOn = !controller.profileOn;
+      console.log(controller.profileOn);
+
+  }
 
 
 }])

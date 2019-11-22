@@ -68,7 +68,7 @@ movies.put('/:id/addlikes', (req, res) => {
           console.log(createdMovie);
         })
       } else {
-        Movie.findOneAndUpdate({omdbID:req.params.id}, {$push:{comment:req.body.comment}}, {new:true}, (error, updatedMovie) => {
+        Movie.findOneAndUpdate({omdbID:req.params.id}, {$inc:{likes: 1 }}, {new:true}, (error, updatedMovie) => {
           res.json(updatedMovie);
           // inc +1
         })
@@ -77,7 +77,7 @@ movies.put('/:id/addlikes', (req, res) => {
   })
 
 movies.put('/:id/declikes', (req, res) => {
-          Movie.findOneAndUpdate({omdbID:req.params.id}, {$push:{comment:req.body.comment}}, {new:true}, (error, updatedMovie) => {
+          Movie.findOneAndUpdate({omdbID:req.params.id}, {$inc:{likes: -1 }}, {new:true}, (error, updatedMovie) => {
             res.json(updatedMovie);
             // inc -1
           }

@@ -5,10 +5,15 @@
  <h5> Genre: {{ctrl.movieInfo.Genre}} </h5>
  <h6> Rated: {{ctrl.movieInfo.Rated}} </h6>
  <h4> Likes: {{ctrl.movieLikes}}</h4>
+ <button
+   ng-if="ctrl.loggedInUser"
+   ng-click="ctrl.addLikes(ctrl.loggedInUser, ctrl.movieInfo)">
+    Like it
+  </button>
  <h3> Comments:</h3>
 <div ng-repeat="comment in ctrl.movieComments">
    {{comment.username}}
-   {{comment.date | date:'MM/dd/yyyy @ h:mm:ssa' 
+   {{comment.date | date:'MM/dd/yyyy @ h:mm:ssa'
 }}
    {{comment.message}}
   <button
