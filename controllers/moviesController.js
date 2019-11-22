@@ -3,6 +3,7 @@ const express = require('express')
 const movies = express.Router()
 const Movie = require('../models/movies.js')
 
+
 // INDEX
 
 movies.get('/', (req, res) => {
@@ -26,12 +27,12 @@ movies.post('/', (req, res) => {
   });
 });
 
-// DELETE
-movies.delete('/:id', (req, res) => {
-  Movie.findByIdAndRemove(req.params.id, (error, deletedMovie) => {
-    res.json(deletedMovie);
-  });
-});
+// DELETES ENTIRE MOVIE
+// movies.put('/:id/deleteComment', (req, res) => {
+//   Movie.findByIdAndRemove(req.params.id, (error, deletedMovie) => {
+//     res.json(deletedMovie);
+//   });
+// });
 
 // UPDATE
 movies.put('/:id', (req, res) => {
@@ -50,13 +51,36 @@ movies.put('/:id/newcomment', (req, res) => {
         res.json(createdMovie);
       })
       } else {
-        Movie.findOneAndUpdate({omdbID:req.params.id},         {$push:{comment:req.body.comment}}, {new:true}, (error, updatedMovie) => {
+        Movie.findOneAndUpdate({omdbID:req.params.id}, {$push:{comment:req.body.comment}}, {new:true}, (error, updatedMovie) => {
           res.json(updatedMovie);
         })
       }
       })
   })
+//
+// movies.get('/:id/comment', (req, res) => {  // to edit comment
+//   Movie.find({omdbID:req.params.id}, (error, foundMovie) => {
+//     console.log(req.params.id);
+//     console.log(foundMovie[0]);
+//   })
+// })
+//
+// to delete comment
+movies.put('/:id/deletecomment', (req, res) => {
+  // console.log(req.body.comment);
+  Movie.findOneAndUpdate({omdbID:req.params.id}, {comment:req.body.comment}, {new:true, upsert:true},(error, updatedComment) => {
+    console.log(updatedComment);
+    res.json(updatedComment)
+  })
+})
 
+movies.put('/:id/editcomment', (req, res) => {
+  // console.log(req.body.comment);
+  Movie.findOneAndUpdate({omdbID:req.params.id}, {comment:req.body.comment}, {new:true, upsert:true},(error, updatedComment) => {
+    console.log(updatedComment);
+    res.json(updatedComment)
+  })
+})
     //// General thought, couldn't these to be merged into one if else statement?
     // LIKE MOVIE
     //find by movie by id . likes $inc +1
