@@ -24,6 +24,11 @@ app.controller('MainController', ['$http', function($http){
 
   this.loggedInUser = null;
 
+  //
+  this.indexOfEditForm = null;
+
+  this.profileOn = false
+
   // ======= API CALLS ====================
 
   // --- Users+Session Datapoint
@@ -33,14 +38,15 @@ app.controller('MainController', ['$http', function($http){
   //takes the get function as a parameter
   /////////////////
 
-  this.displayApp = (getData) => {
+  this.displayApp = () => {
     $http({
       method:'GET',
       url: '/sessions/'
     }).then(function(response){
+      console.log(response)
       controller.loggedInUser = response.data
       console.log(controller.loggedInUser)
-      getData(response.data.username);
+      console.log(controller.loggedInUser.moviesLiked)
     }, function(){
       console.log('error');
     });
@@ -91,7 +97,7 @@ app.controller('MainController', ['$http', function($http){
       console.log(response);
       controller.username = null;
       controller.password = null;
-      controller.displayApp(getData);
+      controller.displayApp();
     }, function(error){
       console.log(error);
       controller.username = 'fail';
@@ -169,7 +175,8 @@ app.controller('MainController', ['$http', function($http){
       method:'GET',
       url:'/moviesapi/'+movieId
     }).then( response => {
-      this.movieLikes = response.data[0].likes
+      console.log(response.data[0])
+      this.movieLikes = response.data[0].likes || 0
       console.log(this.movieLikes);
       this.movieComments = response.data[0].comment
       console.log(this.movieComments);
@@ -189,6 +196,30 @@ app.controller('MainController', ['$http', function($http){
         comment: this.updatedComments
       }
     }).then((response) => {
+      // this.getComment(movieId);
+    })
+  }
+
+  this.editComment = (movieId, index) => {
+    console.log(movieId);
+    console.log(index);
+    this.updatedComments = this.movieComments;
+    this.editedComment = {
+      username:this.loggedInUser.username,
+      date: Date.now(),
+      message:this.updatedMessage
+    }
+    this.updatedComments.splice(index, 1, this.editedComment);
+    console.log(this.movieComments);
+    $http({
+      method: 'PUT',
+      url:'/moviesapi/'+movieId + '/editcomment',
+      data: {
+        comment: this.updatedComments
+      }
+    }).then((response) => {
+      this.indexOfEditForm = null;
+      this.updatedMessage = null;
       // this.getComment(movieId);
     })
   }
@@ -218,10 +249,31 @@ app.controller('MainController', ['$http', function($http){
 
   // edit movie comment
 
+this.addLikes = (user, movieObject) => {
+  console.log(movieObject);
+    $http({
+      method:'PUT',
+      url:'/users/'+ user._id + '/' + movieObject.imdbID,
+      data: {
+        movie: movieObject
+      }
+    }).then( response => {
+        console.log(response);
+        this.getInfo(movieObject.imdbID)
+    })
+  }
 
 
 
+  this.showProfile = () => {
 
+      console.log(controller.profileOn);
+      console.log('toggle');
+      controller.profileOn = !controller.profileOn;
+      console.log(controller.profileOn);
+      console.log(controller.loggedInUser.moviesLiked)
+
+  }
 
 
 }])

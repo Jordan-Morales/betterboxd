@@ -57,6 +57,32 @@ movies.put('/:id/newcomment', (req, res) => {
       }
       })
   })
+
+movies.put('/:id/addlikes', (req, res) => {
+    Movie.find({omdbID:req.params.id}, (error, foundMovie) => {
+      console.log(req.params.id);
+      console.log(foundMovie[0]);
+      if (foundMovie[0] === undefined) {
+        Movie.create(req.body, (error, createdMovie) => {
+          // inc +1
+          console.log(createdMovie);
+        })
+      } else {
+        Movie.findOneAndUpdate({omdbID:req.params.id}, {$inc:{likes: 1 }}, {new:true}, (error, updatedMovie) => {
+          res.json(updatedMovie);
+          // inc +1
+        })
+      }
+    })
+  })
+
+movies.put('/:id/declikes', (req, res) => {
+          Movie.findOneAndUpdate({omdbID:req.params.id}, {$inc:{likes: -1 }}, {new:true}, (error, updatedMovie) => {
+            res.json(updatedMovie);
+            // inc -1
+          }
+        )
+      })
 //
 // movies.get('/:id/comment', (req, res) => {  // to edit comment
 //   Movie.find({omdbID:req.params.id}, (error, foundMovie) => {
@@ -74,6 +100,13 @@ movies.put('/:id/deletecomment', (req, res) => {
   })
 })
 
+movies.put('/:id/editcomment', (req, res) => {
+  // console.log(req.body.comment);
+  Movie.findOneAndUpdate({omdbID:req.params.id}, {comment:req.body.comment}, {new:true, upsert:true},(error, updatedComment) => {
+    console.log(updatedComment);
+    res.json(updatedComment)
+  })
+})
     //// General thought, couldn't these to be merged into one if else statement?
     // LIKE MOVIE
     //find by movie by id . likes $inc +1
