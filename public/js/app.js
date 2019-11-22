@@ -29,6 +29,12 @@ app.controller('MainController', ['$http', function($http){
 
   this.profileOn = false
 
+  this.topMovies = []
+
+  this.openTopMovies = false;
+
+  this.topMovieDetails=[];
+
   // ======= API CALLS ====================
 
   // --- Users+Session Datapoint
@@ -45,6 +51,7 @@ app.controller('MainController', ['$http', function($http){
     }).then(function(response){
       console.log(response)
       controller.loggedInUser = response.data
+      controller.topFive();
       console.log(controller.loggedInUser)
       console.log(controller.loggedInUser.moviesLiked)
     }, function(){
@@ -310,5 +317,68 @@ this.addLikes = (user, movieObject) => {
 
   }
 
+
+  this.topFive = () => {
+    $http({
+      method:'GET',
+      url: '/moviesapi/'
+    }).then( response =>{
+    console.log('the response is next')
+    console.log(response)
+    let movieList = response.data;
+    this.topMovies = [];
+    while (this.topMovies.length < 5){
+        console.log('while begins');
+        let topLikes = 0;
+        let topMovie = {};
+        let topMovieIndex;
+        console.log(movieList);
+        for (movie in movieList){
+            console.log('for begins');
+            console.log(movie);
+            console.log(movieList[movie]);
+            let currentLikes = movieList[movie].likes;
+            if (currentLikes > topLikes){
+                topLikes = currentLikes;
+                console.log('the current movie is ' + movieList[movie])
+                topMovie = movieList[movie];
+                topMovieIndex = movie;
+            }
+        }
+        console.log('the winning movie is' + topMovie.omdbID)
+        this.topMovies.push(topMovie);
+        movieList[topMovieIndex].likes=0;
+        console.log(this.topMovies)
+
+    }
+    console.log(this.topMovies)
+    this.getTopMovieInfo();
+
+    }, error => {
+      console.log(error);
+    })
+
+    //erasing the input field
+    this.movieTitle = ''
+  }
+
+  this.showTopMovies = () => {
+
+      console.log('toggle');
+      controller.openTopMovies = !controller.openTopMovies;
+
+  }
+
+  this.getTopMovieInfo = async (movieId) => {
+    //turning into false to hide the movie list after clicking
+    for (i=0;i<this.topMovies.length;i++){
+    console.log(this.topMovies[i].omdbID);
+    console.log(i);
+    response = await $http({
+      method:'GET',
+      url: 'http://www.omdbapi.com/?apikey=53aa2cd6&i='+this.topMovies[i].omdbID });
+  this.topMovieDetails[i] =  await response.data;
+      console.log(this.topMovieDetails);
+}}
 
 }])
