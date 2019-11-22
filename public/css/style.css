@@ -43,7 +43,7 @@ button:hover, input[type="submit"]:hover {background-color: var(--lightBlue); co
 
 /* STYLING PROFILE INCLUDE */
 
-.profile {width: 90%; margin: 10px auto;}
+.profile {width: 90%; margin: 10px auto; text-align: center;}
 
 .profile div {}
 
@@ -53,11 +53,21 @@ button:hover, input[type="submit"]:hover {background-color: var(--lightBlue); co
 
 /* STYLING TOP MOVIES INCLUDE */
 
-.topmovies {width: 90%; margin: 10px auto;}
+.topmovies {width: 90%; margin: 10px auto; text-align: center;}
 
 .topmovies ul {display: flex; flex-wrap: wrap; justify-content: space-around;}
 
 .topmovies ul li img {height: 300px;}
+
+/* STYLING FOR LOGIN */
+
+.login {text-align: center; width: 90%; margin: 10px auto;}
+
+.login div {display: flex; justify-content: center;}
+
+.login div form {display: flex; flex-direction: column; justify-content: space-around; margin: 20px;}
+
+.login div form input[type="text"], .login div form input[type="password"] {margin: 10px; padding: 6px; background: var(--lightBlue); color: var(--blue); border: 3px groove var(--mustard)}
 
 
 ul{
