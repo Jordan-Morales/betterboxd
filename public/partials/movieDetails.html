@@ -10,4 +10,5 @@
    {{comment.username}}
    {{comment.date}}
    {{comment.message}}
+   <button ng-if="comment.username === ctrl.loggedInUser.username" ng-click="ctrl.deleteComment(ctrl.movieInfo.imdbID, $index)">Delete Me</button>
  </div>

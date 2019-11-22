@@ -163,6 +163,7 @@ app.controller('MainController', ['$http', function($http){
     })
     this.showMovieInfo = true;
   }
+
   this.getComment = (movieId) => {
     $http({
       method:'GET',
@@ -174,6 +175,24 @@ app.controller('MainController', ['$http', function($http){
       console.log(this.movieComments);
     })
   }
+
+  this.deleteComment = (movieId, index) => {
+    console.log(movieId);
+    console.log(index);
+    this.updatedComments = this.movieComments;
+    this.updatedComments.splice(index, 1);
+    console.log(this.movieComments);
+    $http({
+      method: 'PUT',
+      url:'/moviesapi/'+movieId + '/deletecomment',
+      data: {
+        comment: this.updatedComments
+      }
+    }).then((response) => {
+      // this.getComment(movieId);
+    })
+  }
+
   // like movie / unlike movies
 
   // add movie comment
