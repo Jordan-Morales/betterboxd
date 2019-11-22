@@ -8,8 +8,7 @@
         <h3>Movies Liked</h3>
         <ul>
             <li ng-repeat="movie in ctrl.loggedInUser.moviesLiked">
-                {{movie.Title}} <br>
-            <img ng-src={{movie.Poster}} ng-click="main.getInfo(movie.title)"/>
+            <img ng-click="ctrl.getInfo(movie.imdbID)" ng-src={{movie.Poster}} ng-click="main.getInfo(movie.title)" class="animated tada"/>
             </li>
         </ul>
 
