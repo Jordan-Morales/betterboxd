@@ -170,6 +170,20 @@ app.controller('MainController', ['$http', function($http){
     this.showMovieInfo = true;
   }
 
+  this.firstView = (movieId) => {
+   $http({
+     method:'POST',
+     url:'/moviesapi',
+     data: {
+       omdbID: movieId
+     }
+   }).then( response => {
+     console.log(movieId);
+   }, error => {
+     console.log(error);
+   })
+  }
+
   this.getComment = (movieId) => {
     $http({
       method:'GET',
@@ -180,6 +194,27 @@ app.controller('MainController', ['$http', function($http){
       console.log(this.movieLikes);
       this.movieComments = response.data[0].comment
       console.log(this.movieComments);
+    })
+  }
+
+  this.newComment = (movieId) => {
+    console.log(movieId);
+    this.newComments = {
+      username:this.loggedInUser.username,
+      date: Date.now(),
+      message:this.newMessage
+    }
+    console.log(this.movieComments);
+    $http({
+      method: 'PUT',
+      url:'/moviesapi/' + movieId + '/newcomment',
+      data: {
+        comment: this.newComments
+      }
+    }).then((response) => {
+      this.indexOfEditForm = null;
+      this.newMessage = null;
+      this.getComment(movieId)
     })
   }
 
