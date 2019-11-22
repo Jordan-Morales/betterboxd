@@ -1,4 +1,8 @@
+/* BASIC RESET */
+
 * {margin: 0; padding: 0; box-sizing: border-box;}
+
+/* VARIABLES */
 
 :root {
     --mustard: #D79922;
@@ -10,7 +14,11 @@
     --font-main: 'Raleway', sans-serif;
     --font-title: 'Staatliches', cursive;
     --font-logo: 'Major Mono Display', monospace;
+
+    --basictransition: background-color .4s, color .4s;
 }
+
+/* GLOBAL SETTINGS */
 
 body {
     background-color: ghostwhite; font-family: var(--font-main); color: var(--blue);
@@ -18,15 +26,39 @@ body {
 
 h1,h2,h3,h4,h5,h6 {font-family: var(--font-title)}
 
-.logo {font-family: var(--font-logo)}
+
+/* BUTTON STYLING */
+
+button, input[type="submit"] {padding: 6px; margin: 6px; background-color: var(--mustard); color: var(--ivory); transition: var(--basictransition); border-radius: 5px;}
+
+button:hover, input[type="submit"]:hover {background-color: var(--lightBlue); color: var(--blue);}
+
+/* LOGO STYLING */
+
+.logo {font-family: var(--font-logo); font-size: 500%; text-align: center;}
+
+.logocontainer {text-align: center;}
+
+.b {color:var(--red)}
+
+/* STYLING PROFILE INCLUDE */
 
 .profile {width: 90%; margin: 10px auto;}
 
 .profile div {}
 
-.profile div img {height: 200px;}
+.profile div img {height: 200px; margin: 10px;}
 
-.profile div ul {display: flex; flex-wrap: wrap; font-size: 50%;}
+.profile div ul {display: flex; flex-wrap: wrap; justify-content: space-around;}
+
+/* STYLING TOP MOVIES INCLUDE */
+
+.topmovies {width: 90%; margin: 10px auto;}
+
+.topmovies ul {display: flex; flex-wrap: wrap; justify-content: space-around;}
+
+.topmovies ul li img {height: 300px;}
+
 
 ul{
   list-style: none
