@@ -74,6 +74,13 @@ movies.put('/:id/deletecomment', (req, res) => {
   })
 })
 
+movies.put('/:id/editcomment', (req, res) => {
+  // console.log(req.body.comment);
+  Movie.findOneAndUpdate({omdbID:req.params.id}, {comment:req.body.comment}, {new:true, upsert:true},(error, updatedComment) => {
+    console.log(updatedComment);
+    res.json(updatedComment)
+  })
+})
     //// General thought, couldn't these to be merged into one if else statement?
     // LIKE MOVIE
     //find by movie by id . likes $inc +1
