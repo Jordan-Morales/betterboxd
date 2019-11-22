@@ -1,0 +1,15 @@
+<div class="topmovies">
+    <button ng-click="ctrl.showTopMovies()">Show Top Movies</button>
+
+
+    <div ng-if="ctrl.openTopMovies">
+
+
+        <h1>Top 5 Movies</h1>
+        <ul>
+            <li ng-repeat="movie in ctrl.topMovies">
+                {{movie.omdbID}}
+            </li>
+        </ul>
+
+    </div>
