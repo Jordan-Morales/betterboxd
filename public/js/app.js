@@ -256,8 +256,6 @@ this.addLikes = (user,movie) => {
     })
   }
 
-}
-
 
 
 
