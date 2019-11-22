@@ -22,9 +22,19 @@ movies.get('/:id', (req, res) => {
 
 // CREATE
 movies.post('/', (req, res) => {
-  Movie.create(req.body, (error, createdMovie) => {
-    res.json(createdMovie);
-  });
+  Movie.find({omdbID:req.body.omdbID}, (error, foundMovie) => {
+    console.log(req.body.omdbID);
+    console.log(foundMovie[0]);
+    if (foundMovie[0] === undefined) {
+      Movie.create(req.body, (error, createdMovie) => {
+        console.log(createdMovie);
+        res.json(createdMovie);
+      })
+    } else {
+      res.json(foundMovie)
+
+  }
+})
 });
 
 // DELETES ENTIRE MOVIE
