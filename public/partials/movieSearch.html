@@ -1,7 +1,7 @@
 <ul>
   <li
     ng-repeat="movie in ctrl.movieList">
-    <a href="#" ng-click="ctrl.getInfo(movie.imdbID)">
+    <a href="#" ng-click="ctrl.getInfo(movie.imdbID); ctrl.firstView(movie.imdbID)" >
       {{movie.Title}}
     </a>
   </li>

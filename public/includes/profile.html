@@ -1,4 +1,4 @@
-<div ng-init="ctrl.displayApp(ctrl.getMovies)">
+<div>
     <button ng-click="ctrl.showProfile()">Show Profile</button>
 
 
@@ -7,7 +7,7 @@
         <h1>{{ctrl.loggedInUser.name}}<h1>
         <h3>Movies Liked</h3>
         <ul>
-            <li ng-repeat"movie in ctrl.loggedInUser.moviesLiked">
+            <li ng-repeat="movie in ctrl.loggedInUser.moviesLiked">
                 {{movie.Title}}
             <img ng-src={{movie.Poster}} ng-click="main.getInfo(movie.title)"/>
             </li>
