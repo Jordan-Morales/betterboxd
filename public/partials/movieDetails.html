@@ -1,10 +1,33 @@
-<h2>{{ctrl.movieInfo.Title}} {{ctrl.movieInfo.Year}}</h2>
- <img ng-src='{{ctrl.movieInfo.Poster}}' />
- <h3> Starring: {{ctrl.movieInfo.Actors}} </h3>
- <h4> Plot: {{ctrl.movieInfo.Plot}} </h4>
- <h5> Genre: {{ctrl.movieInfo.Genre}} </h5>
- <h6> Rated: {{ctrl.movieInfo.Rated}} </h6>
- <h4> Likes: {{ctrl.movieLikes}}</h4>
+<div class="card mb-3">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img ng-src='{{ctrl.movieInfo.Poster}}' />
+    </div>
+
+    <div class="col-md-8">
+      <div class="card-body">
+        <h4 class="card-title">{{ctrl.movieInfo.Title}}   <small class="text-muted">({{ctrl.movieInfo.Year}})</small></h4>
+
+        <h6 > Starring:</h6>
+        <p>{{ctrl.movieInfo.Actors}}</p>
+
+        <h6 >Plot: </h6>
+        <p> {{ctrl.movieInfo.Plot}} </p>
+
+        <h6 > Genre:</h6>
+        <p>  {{ctrl.movieInfo.Genre}} </p>
+
+        <h6 > Rated:</h6>
+        <p> {{ctrl.movieInfo.Rated}} </p>
+
+        <h5> Likes: {{ctrl.movieLikes}}</h5>
+        <p> </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
  <button
    ng-if="ctrl.loggedInUser"
    ng-click="ctrl.addLikes(ctrl.loggedInUser, ctrl.movieInfo)">
