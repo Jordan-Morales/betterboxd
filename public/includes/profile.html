@@ -8,7 +8,8 @@
         <h3>Movies Liked</h3>
         <ul>
             <li ng-repeat"movie in ctrl.moviesLiked">
-            <img ng-src="movie.poster" ng-click="main.getInfo(movie.title)"/>
+                {{movie.Poster}}
+            <img ng-src={{movie.Poster}} ng-click="main.getInfo(movie.title)"/>
             </li>
         </ul>
 
