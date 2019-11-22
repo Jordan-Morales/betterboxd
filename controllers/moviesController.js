@@ -57,6 +57,31 @@ movies.put('/:id/newcomment', (req, res) => {
       }
       })
   })
+
+movies.put('/:id/addlikes', (req, res) => {
+    Movie.find({omdbID:req.params.id}, (error, foundMovie) => {
+      console.log(req.params.id);
+      console.log(foundMovie[0]);
+      if (foundMovie[0] === undefined) {
+        Movie.create(req.body, (error, createdMovie) => {
+          // inc +1
+          console.log(createdMovie);
+      } else {
+        Movie.findOneAndUpdate({omdbID:req.params.id}, {$push:{comment:req.body.comment}}, {new:true}, (error, updatedMovie) => {
+          res.json(updatedMovie);
+          // inc +1
+        })
+      }
+    })
+  })
+
+movies.put('/:id/declikes', (req, res) => {
+          Movie.findOneAndUpdate({omdbID:req.params.id}, {$push:{comment:req.body.comment}}, {new:true}, (error, updatedMovie) => {
+            res.json(updatedMovie);
+            // inc -1
+          }
+        )
+      })
 //
 // movies.get('/:id/comment', (req, res) => {  // to edit comment
 //   Movie.find({omdbID:req.params.id}, (error, foundMovie) => {
