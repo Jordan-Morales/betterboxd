@@ -66,6 +66,7 @@ movies.put('/:id/addlikes', (req, res) => {
         Movie.create(req.body, (error, createdMovie) => {
           // inc +1
           console.log(createdMovie);
+        })
       } else {
         Movie.findOneAndUpdate({omdbID:req.params.id}, {$push:{comment:req.body.comment}}, {new:true}, (error, updatedMovie) => {
           res.json(updatedMovie);
