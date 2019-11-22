@@ -37,4 +37,27 @@ router.put('/:id', (req, res)=>{
     });
 });
 
+//Like/Unlike Route
+router.put('/:userID/:movieID', (req, res)=>{
+    Users.findById({id:req.params.userID}, (err, updatedUser)=>{
+        res.json(updatedUser);
+        console.log(req.body);
+        likeArray = updatedUser.moviesLiked.filter((movie) => {return movie.imdbID == req.params.movieID});
+        console(likeArray);
+        if (likeArray.length > 0){
+            Users.findOneAndUpdate({id:req.params.userID}, {$pull:{moviesLiked:req.body.movie}}, {new:true}, (error, updatedUser) => {
+                      console.log(updatedUser)
+                      res.redirect('/moviesapi/'+ req.params.movieID + '/declikes/');
+                    })
+
+        }else{
+    Users.findOneAndUpdate({id:req.params.userID}, {$push:{moviesLiked:req.body.movie}}, {new:true}, (error, updatedUser) => {
+              console.log(updatedUser)
+              res.redirect('/moviesapi/'+ req.params.movieID + '/addlikes/');
+            })
+
+        }
+    });
+});
+
 module.exports = router;
