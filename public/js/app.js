@@ -245,14 +245,17 @@ app.controller('MainController', ['$http', function($http){
 
   // edit movie comment
 
-this.addLikes = (user,movie) => {
-
+this.addLikes = (user, movieObject) => {
+  console.log(movieObject);
     $http({
       method:'PUT',
-      url:'/users/'+ user._id + '/' + movie.id
+      url:'/users/'+ user._id + '/' + movieObject.imdbID,
+      data: {
+        movie: movieObject
+      }
     }).then( response => {
         console.log(response);
-        this.getInfo(movie.id)
+        this.getInfo(movieObject.imdbID)
     })
   }
 
