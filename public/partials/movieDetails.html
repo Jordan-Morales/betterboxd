@@ -4,3 +4,11 @@
  <h4> Plot: {{ctrl.movieInfo.Plot}} </h4>
  <h5> Genre: {{ctrl.movieInfo.Genre}} </h5>
  <h6> Rated: {{ctrl.movieInfo.Rated}} </h6>
+ <h4> Likes: {{ctrl.movieLikes}}</h4>
+ <h3> Comments:</h3>
+<div ng-repeat="comment in ctrl.movieComments">
+   {{comment.username}}
+   {{comment.date}}
+   {{comment.message}}
+   <button ng-if="comment.username === ctrl.loggedInUser.username" ng-click="ctrl.deleteComment(ctrl.movieInfo.imdbID, $index)">Delete Me</button>
+ </div>

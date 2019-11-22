@@ -21,10 +21,9 @@ app.controller('MainController', ['$http', function($http){
   controller = this;
 
   // setting for session validation
-  this.loggedInUsername = null;
 
-  // for user's name
-  this.loggedInName = null;
+  this.loggedInUser = null;
+
   // ======= API CALLS ====================
 
   // --- Users+Session Datapoint
@@ -35,16 +34,16 @@ app.controller('MainController', ['$http', function($http){
   /////////////////
 
   this.displayApp = (getData) => {
-      $http({
-          method:'GET',
-          url: '/sessions/'
-      }).then(function(response){
-          controller.loggedInUsername = response.data.username;
-          controller.loggedInName = response.data.name;
-          getData(response.data.username);
-      }, function(){
-          console.log('error');
-      });
+    $http({
+      method:'GET',
+      url: '/sessions/'
+    }).then(function(response){
+      controller.loggedInUser = response.data
+      console.log(controller.loggedInUser)
+      getData(response.data.username);
+    }, function(){
+      console.log('error');
+    });
   }
 
   ////////////////////////////
@@ -53,25 +52,25 @@ app.controller('MainController', ['$http', function($http){
   ////////////////////////////
 
   this.createUser = () => {
-      $http({
-          method:'POST',
-          url:'/users',
-          data: {
-              name: this.createname,
-              username: this.createusername,
-              password: this.createpassword
-          }
-      }).then(function(response){
-          console.log(response);
-          controller.createname = 'thanks, now login';
-          controller.createusername = null;
-          controller.createpassword = null;
-      }, function(error){
-          console.log(error);
-          controller.createname = 'fail';
-          controller.createusername = null;
-          controller.createpassword = null;
-      })
+    $http({
+      method:'POST',
+      url:'/users',
+      data: {
+        name: this.createname,
+        username: this.createusername,
+        password: this.createpassword
+      }
+    }).then(function(response){
+      console.log(response);
+      controller.createname = 'thanks, now login';
+      controller.createusername = null;
+      controller.createpassword = null;
+    }, function(error){
+      console.log(error);
+      controller.createname = 'fail';
+      controller.createusername = null;
+      controller.createpassword = null;
+    })
   }
 
   //////////////////////
@@ -81,23 +80,23 @@ app.controller('MainController', ['$http', function($http){
   //////////////////////
 
   this.logIn = (getData) => {
-  $http({
+    $http({
       method:'POST',
       url:'/sessions/',
       data: {
-          username: this.username,
-          password: this.password
+        username: this.username,
+        password: this.password
       }
-  }).then(function(response){
+    }).then(function(response){
       console.log(response);
       controller.username = null;
       controller.password = null;
       controller.displayApp(getData);
-  }, function(error){
+    }, function(error){
       console.log(error);
       controller.username = 'fail';
       controller.password = null;
-  })
+    })
   }
 
   /////////////////////
@@ -105,15 +104,15 @@ app.controller('MainController', ['$http', function($http){
   //Takes a function to clear all data as a parameter, so data from previous user doesnt linger
   /////////////////////
   this.logOut = (clearFunction) => {
-  $http({
+    $http({
       method:'DELETE',
       url:'/sessions/'
-  }).then(function(response){
+    }).then(function(response){
       console.log(response);
       clearFunction();
-  }, function(error){
+    }, function(error){
       console.log(error);
-  });
+    });
   }
 
   //////////////////////
@@ -122,10 +121,11 @@ app.controller('MainController', ['$http', function($http){
   //////////////////////
 
   this.clearData = () => {
-      this.loggedInUsername = null;
-      this.loggedInName = null;
-      this.showMovieInfo = false
-      this.showMovieList = false
+
+    this.loggedInUser = null;
+    this.showMovieInfo = false
+    this.showMovieList = false
+
   }
 
 
@@ -155,19 +155,65 @@ app.controller('MainController', ['$http', function($http){
       method:'GET',
       url: 'http://www.omdbapi.com/?apikey=53aa2cd6&i='+movieId
     }).then( response =>{
-      this.movieInfo = response.data
-      console.log(this.movieInfo);
+      this.movieInfo = response.data;
+      this.getComment(movieId);
+      // console.log(this.movieInfo);
     }, error => {
       console.log(error);
     })
     this.showMovieInfo = true;
+  }
 
+  this.getComment = (movieId) => {
+    $http({
+      method:'GET',
+      url:'/moviesapi/'+movieId
+    }).then( response => {
+      this.movieLikes = response.data[0].likes
+      console.log(this.movieLikes);
+      this.movieComments = response.data[0].comment
+      console.log(this.movieComments);
+    })
+  }
+
+  this.deleteComment = (movieId, index) => {
+    console.log(movieId);
+    console.log(index);
+    this.updatedComments = this.movieComments;
+    this.updatedComments.splice(index, 1);
+    console.log(this.movieComments);
+    $http({
+      method: 'PUT',
+      url:'/moviesapi/'+movieId + '/deletecomment',
+      data: {
+        comment: this.updatedComments
+      }
+    }).then((response) => {
+      // this.getComment(movieId);
+    })
   }
 
   // like movie / unlike movies
 
   // add movie comment
-
+  // this.addComment = () => {
+  //   $http({
+  //     method:'POST',
+  //     url:'/moviesapi/'+movieId,
+  //     data: {
+  //       comment:
+  //     }
+  //   }).then((response) => {
+  //     console.log(response.data);
+  //   }, (error) => {
+  //     $http({
+  //       method:'PUT',
+  //       url:'/moviesapi/'+movieId
+  //     }).then((response) => {
+  //       console.log(response.data);
+  //     })
+  //   })
+  // }
   // delete movie comment
 
   // edit movie comment
