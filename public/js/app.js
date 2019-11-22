@@ -24,6 +24,9 @@ app.controller('MainController', ['$http', function($http){
 
   this.loggedInUser = null;
 
+  //
+  this.indexOfEditForm = null;
+
   // ======= API CALLS ====================
 
   // --- Users+Session Datapoint
@@ -189,6 +192,30 @@ app.controller('MainController', ['$http', function($http){
         comment: this.updatedComments
       }
     }).then((response) => {
+      // this.getComment(movieId);
+    })
+  }
+
+  this.editComment = (movieId, index) => {
+    console.log(movieId);
+    console.log(index);
+    this.updatedComments = this.movieComments;
+    this.editedComment = {
+      username:this.loggedInUser.username,
+      date: Date.now(),
+      message:this.updatedMessage
+    }
+    this.updatedComments.splice(index, 1, this.editedComment);
+    console.log(this.movieComments);
+    $http({
+      method: 'PUT',
+      url:'/moviesapi/'+movieId + '/editcomment',
+      data: {
+        comment: this.updatedComments
+      }
+    }).then((response) => {
+      this.indexOfEditForm = null;
+      this.updatedMessage = null;
       // this.getComment(movieId);
     })
   }
