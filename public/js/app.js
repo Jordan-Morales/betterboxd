@@ -38,14 +38,15 @@ app.controller('MainController', ['$http', function($http){
   //takes the get function as a parameter
   /////////////////
 
-  this.displayApp = (getData) => {
+  this.displayApp = () => {
     $http({
       method:'GET',
       url: '/sessions/'
     }).then(function(response){
+      console.log(response)
       controller.loggedInUser = response.data
       console.log(controller.loggedInUser)
-      getData(response.data.username);
+      console.log(controller.loggedInUser.moviesLiked)
     }, function(){
       console.log('error');
     });
@@ -96,7 +97,7 @@ app.controller('MainController', ['$http', function($http){
       console.log(response);
       controller.username = null;
       controller.password = null;
-      controller.displayApp(getData);
+      controller.displayApp();
     }, function(error){
       console.log(error);
       controller.username = 'fail';
@@ -270,6 +271,7 @@ this.addLikes = (user, movieObject) => {
       console.log('toggle');
       controller.profileOn = !controller.profileOn;
       console.log(controller.profileOn);
+      console.log(controller.loggedInUser.moviesLiked)
 
   }
 
