@@ -69,6 +69,26 @@ button:hover, input[type="submit"]:hover {background-color: var(--lightBlue); co
 
 .login div form input[type="text"], .login div form input[type="password"] {margin: 10px; padding: 6px; background: var(--lightBlue); color: var(--blue); border: 3px groove var(--mustard)}
 
+/* STYLING FOR NAVIGATION */
+
+.topmenu {display: flex; flex-wrap: wrap; justify-content: space-around; background-color: var(--blue);
+          color: var(--lightBlue); padding: 10px;}
+
+.topmenu ul {display: flex; flex-wrap: wrap; justify-content: space-around; margin-top: 10px;}
+
+.topmenu ul li {margin: 10px;}
+
+.topmenu ul li a, .topmenu div a {color: var(--lightBlue); text-decoration: none; text-transform: uppercase;
+    font-weight: 900; transition: var(--basictransition);}
+
+.topmenu ul li a:hover, .topmenu div a:hover {color: var(--blue); background-color: var(--lightBlue);}
+
+.topmenu form {margin-top: 7px;}
+
+.mobiletoggle {display: none}
+
+
+/* ----------------------- */
 
 ul{
   list-style: none
@@ -93,4 +113,17 @@ a{
 }
 .empty{
   filter: none;
+}
+
+
+/* MOBILE STYLING */
+
+@media only screen and (max-width: 550px) {
+
+.topmenu {flex-direction: column; align-content: center;}
+#menu {display: none;}
+.logo {font-family: var(--font-logo); font-size: 200%; text-align: center;}
+.mobiletoggle {display: block;}
+.topmenu form {display: block;}
+.login div {display: block;}
 }

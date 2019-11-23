@@ -351,8 +351,9 @@ this.addLikes = (user, movieObject) => {
         this.getInfo(movieObject.imdbID)
     })
   }
-
-
+/////////////////
+// function to toggle display of profile
+/////////////////
 
   this.showProfile = () => {
 
@@ -363,7 +364,9 @@ this.addLikes = (user, movieObject) => {
       // console.log(controller.loggedInUser.moviesLiked)
 
   }
-
+/////////////////
+//function to build array of top movies
+///////////////
 
   this.topFive = () => {
     $http({
@@ -409,12 +412,19 @@ this.addLikes = (user, movieObject) => {
     this.movieTitle = ''
   }
 
+///////////////////
+//Function to toggle display of top movies
+///////////////////
+
   this.showTopMovies = () => {
 
       // console.log('toggle');
       controller.openTopMovies = !controller.openTopMovies;
 
   }
+////////////////////////
+//function to get details of top movies from omdb
+/////////////////////////
 
   this.getTopMovieInfo = async (movieId) => {
     //turning into false to hide the movie list after clicking
@@ -427,5 +437,19 @@ this.addLikes = (user, movieObject) => {
   this.topMovieDetails[i] =  await response.data;
       // console.log(this.topMovieDetails);
 }}
+
+/////////////////
+//Function to toggle movies on mobile
+/////////////////
+this.showMenu = () => {
+
+    topMenu = document.getElementById('menu');
+    if (menu.style.display == 'none'){
+        menu.style.display = 'block';
+    } else {
+        menu.style.display = 'none';
+    }
+
+}
 
 }])

@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" ng-app="betterboxdApp">
 <head>
-  <meta charset="utf-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <!-- angular script -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js" charset="utf-8"></script>
   <!-- app.js link -->
   <script src="/js/app.js" charset="utf-8"></script>
   <!-- our own css file -->
+
+  <!-- GOOGLE FONTS -->
   <link href="https://fonts.googleapis.com/css?family=Major+Mono+Display|Raleway|Staatliches&display=swap" rel="stylesheet">
 
+  <!-- FAVICON -->
+  <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+
+  <!-- FONT AWESOME ICONS FOR SANDWHICH MENU -->
+  <script src="https://kit.fontawesome.com/39724db188.js" crossorigin="anonymous"></script>
+
+  <!-- BOOTSTRAP -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+  <!-- ANIMATE CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
 
+  <!-- OUR STYLES -->
   <link rel="stylesheet" href="/css/style.css">
+
   <title>betterboxd</title>
 </head>
 <!-- body -->
@@ -25,11 +39,9 @@
     <div class="animated heartBeat logocontainer">
         <span class="logo"><span class="b animated heartBeat">B</span>etter<span class="b animated heartBeat">B</span>oxed</span>
     </div>
+    <div ng-include="'includes/navigation.html'"></div>
     <!-- search box -->
-    <form ng-submit="ctrl.getMovies(); ctrl.showMovieList = true">
-      <input type="text" placeholder="movie title" ng-model="ctrl.movieTitle">
-      <input type="submit" value="search"></button>
-    </form>
+
     <!-- logo -->
     <!-- subtitle -->
 <div ng-include="'includes/login.html'"></div>
