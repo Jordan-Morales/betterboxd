@@ -1,14 +1,13 @@
-<div>
-    <button ng-click="ctrl.showTopMovies()">Show Top Movies</button>
+<div class="topmovies" ng-if="ctrl.openTopMovies">
 
 
-    <div ng-if="ctrl.openTopMovies">
+    <div>
 
 
         <h1>Top 5 Movies</h1>
         <ul>
-            <li ng-repeat="movie in ctrl.topMovies">
-                {{movie.omdbID}}
+            <li ng-repeat="movie in ctrl.topMovieDetails">
+                <img ng-click="ctrl.getInfo(movie.imdbID)" ng-src={{movie.Poster}} ng-click="main.getInfo(movie.title)" class="animated tada"/>
             </li>
         </ul>
 

@@ -1,7 +1,129 @@
+/* BASIC RESET */
+
+* {margin: 0; padding: 0; box-sizing: border-box;}
+
+/* VARIABLES */
+
+:root {
+    --mustard: #D79922;
+    --ivory: #EFE2BA;
+    --red: #F13C20;
+    --blue: #4056A1;
+    --lightBlue: #C5CBE3;
+
+    --font-main: 'Raleway', sans-serif;
+    --font-title: 'Staatliches', cursive;
+    --font-logo: 'Major Mono Display', monospace;
+
+    --basictransition: background-color .4s, color .4s;
+}
+
+/* GLOBAL SETTINGS */
+
+body {
+    background-color: ghostwhite; font-family: var(--font-main); color: var(--blue);
+}
+
+h1,h2,h3,h4,h5,h6 {font-family: var(--font-title)}
+
+
+/* BUTTON STYLING */
+
+button, input[type="submit"] {padding: 6px; margin: 6px; background-color: var(--mustard); color: var(--ivory); transition: var(--basictransition); border-radius: 5px;}
+
+button:hover, input[type="submit"]:hover {background-color: var(--lightBlue); color: var(--blue);}
+
+/* LOGO STYLING */
+
+.logo {font-family: var(--font-logo); font-size: 500%; text-align: center;}
+
+.logocontainer {text-align: center;}
+
+.b {color:var(--red)}
+
+/* STYLING PROFILE INCLUDE */
+
+.profile {width: 90%; margin: 10px auto; text-align: center;}
+
+.profile div {}
+
+.profile div img {height: 200px; margin: 10px;}
+
+.profile div ul {display: flex; flex-wrap: wrap; justify-content: space-around;}
+
+/* STYLING TOP MOVIES INCLUDE */
+
+.topmovies {width: 90%; margin: 10px auto; text-align: center;}
+
+.topmovies ul {display: flex; flex-wrap: wrap; justify-content: space-around;}
+
+.topmovies ul li img {height: 300px;}
+
+/* STYLING FOR LOGIN */
+
+.login {text-align: center; width: 90%; margin: 10px auto;}
+
+.login div {display: flex; justify-content: center;}
+
+.login div form {display: flex; flex-direction: column; justify-content: space-around; margin: 20px;}
+
+.login div form input[type="text"], .login div form input[type="password"] {margin: 10px; padding: 6px; background: var(--lightBlue); color: var(--blue); border: 3px groove var(--mustard)}
+
+/* STYLING FOR NAVIGATION */
+
+.topmenu {display: flex; flex-wrap: wrap; justify-content: space-around; background-color: var(--blue);
+          color: var(--lightBlue); padding: 10px;}
+
+.topmenu ul {display: flex; flex-wrap: wrap; justify-content: space-around; margin-top: 10px;}
+
+.topmenu ul li {margin: 10px;}
+
+.topmenu ul li a, .topmenu div a {color: var(--lightBlue); text-decoration: none; text-transform: uppercase;
+    font-weight: 900; transition: var(--basictransition);}
+
+.topmenu ul li a:hover, .topmenu div a:hover {color: var(--blue); background-color: var(--lightBlue);}
+
+.topmenu form {margin-top: 7px;}
+
+.mobiletoggle {display: none}
+
+
+/* ----------------------- */
+
 ul{
   list-style: none
 }
 
 a{
   text-decoration: none
+}
+
+.icon {
+  display: inline-block;
+  width: 70px;
+  height: 80px;
+  background-size: cover;
+}
+.icon-heart {
+  background-image: url(https://res.cloudinary.com/hnt3etgxo/image/upload/v1574461274/iconfinder_heart_298792_r3wwqm.svg);
+}
+.filled {
+  filter: invert(13%) sepia(88%) saturate(3960%) hue-rotate(355deg)
+    brightness(100%) contrast(86%);
+}
+.empty{
+  filter: none;
+}
+
+
+/* MOBILE STYLING */
+
+@media only screen and (max-width: 550px) {
+
+.topmenu {flex-direction: column; align-content: center;}
+#menu {display: none;}
+.logo {font-family: var(--font-logo); font-size: 200%; text-align: center;}
+.mobiletoggle {display: block;}
+.topmenu form {display: block;}
+.login div {display: block;}
 }

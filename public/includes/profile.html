@@ -1,5 +1,5 @@
-<div>
-    <button ng-click="ctrl.showProfile()">Show Profile</button>
+<div class="profile" ng-if="ctrl.loggedInUser">
+
 
 
     <div ng-if="ctrl.profileOn">
@@ -8,9 +8,10 @@
         <h3>Movies Liked</h3>
         <ul>
             <li ng-repeat="movie in ctrl.loggedInUser.moviesLiked">
-                {{movie.Title}}
-            <img ng-src={{movie.Poster}} ng-click="main.getInfo(movie.title)"/>
+            <img ng-click="ctrl.getInfo(movie.imdbID)" ng-src={{movie.Poster}} ng-click="main.getInfo(movie.title)" class="animated tada"/>
             </li>
         </ul>
 
     </div>
+
+</div>

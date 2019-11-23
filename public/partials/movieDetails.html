@@ -1,15 +1,40 @@
-<h2>{{ctrl.movieInfo.Title}} {{ctrl.movieInfo.Year}}</h2>
- <img ng-src='{{ctrl.movieInfo.Poster}}' />
- <h3> Starring: {{ctrl.movieInfo.Actors}} </h3>
- <h4> Plot: {{ctrl.movieInfo.Plot}} </h4>
- <h5> Genre: {{ctrl.movieInfo.Genre}} </h5>
- <h6> Rated: {{ctrl.movieInfo.Rated}} </h6>
- <h4> Likes: {{ctrl.movieLikes}}</h4>
- <button
-   ng-if="ctrl.loggedInUser"
-   ng-click="ctrl.addLikes(ctrl.loggedInUser, ctrl.movieInfo)">
-    Like it
-  </button>
+<div class="card mb-3">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img ng-src='{{ctrl.movieInfo.Poster}}' />
+    </div>
+
+    <div class="col-md-8">
+      <div class="card-body">
+        <h4 class="card-title">{{ctrl.movieInfo.Title}}   <small class="text-muted">({{ctrl.movieInfo.Year}})</small></h4>
+
+        <h6 > Starring:</h6>
+        <p>{{ctrl.movieInfo.Actors}}</p>
+
+        <h6 >Plot: </h6>
+        <p> {{ctrl.movieInfo.Plot}} </p>
+
+        <h6 > Genre:</h6>
+        <p>  {{ctrl.movieInfo.Genre}} </p>
+
+        <h6 > Rated:</h6>
+        <p> {{ctrl.movieInfo.Rated}} </p>
+
+        <h5> Likes: {{ctrl.movieLikes}}</h5>
+
+        <div
+          class="icon icon-heart"
+          ng-if="ctrl.loggedInUser"
+          ng-class="ctrl.getLikes(ctrl.loggedInUser, ctrl.movieInfo.imdbID) ? 'filled' : toggle"
+          ng-click="toggle = !toggle; ctrl.addLikes(ctrl.loggedInUser, ctrl.movieInfo)">
+         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
  <h3> Comments:</h3>
  <form
    ng-submit="ctrl.newComment(ctrl.movieInfo.imdbID)"
@@ -18,20 +43,32 @@
      <input type="submit" value="Create a Comment">
  </form>
 <div ng-repeat="comment in ctrl.movieComments">
-   {{comment.username}}
-   {{comment.date | date:'MM/dd/yyyy @ h:mm:ssa'
-}}
-   {{comment.message}}
-  <button
-    ng-if="comment.username === ctrl.loggedInUser.username && $index !== ctrl.indexOfEditForm"
-    ng-click="ctrl.indexOfEditForm = $index ; ctrl.updatedDescription=null">
-      Edit Me
-  </button>
-  <form
-    ng-submit="ctrl.editComment(ctrl.movieInfo.imdbID, $index)"
-    ng-if="$index === ctrl.indexOfEditForm">
-      <input ng-model="ctrl.updatedMessage">
-      <input type="submit" value="Edit this Comment">
-  </form>
-   <button ng-if="comment.username === ctrl.loggedInUser.username" ng-click="ctrl.deleteComment(ctrl.movieInfo.imdbID, $index)">Delete Me</button>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">@{{comment.username}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{comment.date | date:'MM/dd/yyyy @ h:mm:ssa'}}</h6>
+      <p class="card-text">{{comment.message}}</p>
+      <a href="#" class="card-link" ng-if="comment.username === ctrl.loggedInUser.username && $index !== ctrl.indexOfEditForm"
+      ng-click="ctrl.indexOfEditForm = $index ; ctrl.updatedDescription=null">edit</a>
+
+
+      <a href="#" class="card-link" ng-if="comment.username === ctrl.loggedInUser.username"
+      ng-click="ctrl.deleteComment(ctrl.movieInfo.imdbID, $index)">delete</a>
+
+      <form
+        ng-submit="ctrl.editComment(ctrl.movieInfo.imdbID, $index)"
+        ng-if="$index === ctrl.indexOfEditForm">
+          <input ng-model="ctrl.updatedMessage">
+          <input type="submit" value="Edit this Comment">
+      </form>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
  </div>
