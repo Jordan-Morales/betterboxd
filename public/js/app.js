@@ -148,7 +148,7 @@ app.controller('MainController', ['$http', function($http){
   this.getMovies = () => {
     $http({
       method:'GET',
-      url: 'http://www.omdbapi.com/?apikey=53aa2cd6&s='+this.movieTitle
+      url: 'https://www.omdbapi.com/?apikey=53aa2cd6&s='+this.movieTitle
     }).then( response =>{
       this.movieList = response.data.Search
       // console.log(this.movieList);
@@ -166,7 +166,7 @@ app.controller('MainController', ['$http', function($http){
     this.showMovieList = false
     $http({
       method:'GET',
-      url: 'http://www.omdbapi.com/?apikey=53aa2cd6&i='+movieId
+      url: 'https://www.omdbapi.com/?apikey=53aa2cd6&i='+movieId
     }).then( response =>{
       this.movieInfo = response.data;
 
@@ -433,7 +433,7 @@ this.addLikes = (user, movieObject) => {
     // console.log(i);
     response = await $http({
       method:'GET',
-      url: 'http://www.omdbapi.com/?apikey=53aa2cd6&i='+this.topMovies[i].omdbID });
+      url: 'https://www.omdbapi.com/?apikey=53aa2cd6&i='+this.topMovies[i].omdbID });
   this.topMovieDetails[i] =  await response.data;
       // console.log(this.topMovieDetails);
 }}
