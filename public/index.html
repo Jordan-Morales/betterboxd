@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" ng-app="betterboxdApp">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- angular script -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js" charset="utf-8"></script>
@@ -19,6 +19,9 @@
   <!-- FONT AWESOME ICONS FOR SANDWHICH MENU -->
   <script src="https://kit.fontawesome.com/39724db188.js" crossorigin="anonymous"></script>
 
+  <!-- BULMA CSS FOR TESTING -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+
   <!-- BOOTSTRAP -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -33,35 +36,56 @@
   <title>betterboxd</title>
 </head>
 <!-- body -->
+
 <body ng-controller="MainController as ctrl">
   <!-- nav bar should contain search bar, login / signup features (signup will end up showing another section) -->
-  <nav>
-    <div class="animated heartBeat logocontainer">
-        <span class="logo"><span class="b animated heartBeat">B</span>etter<span class="b animated heartBeat">B</span>oxd</span>
-    </div>
-    <div ng-include="'includes/navigation.html'"></div>
-    <!-- search box -->
+  <!-- search box -->
+  <div ng-include="'partials/navigation.html'"></div>
 
+  <section class="section">
     <!-- logo -->
+      <div class="animated heartBeat logocontainer">
+        <span class="logo"><span class="b animated heartBeat">B</span>etter<span class="b animated heartBeat">B</span>oxd</span>
+      </div>
     <!-- subtitle -->
-<div ng-include="'includes/login.html'"></div>
-  </nav>
-<!-- signup will shift the hot movies down -->
+    <div>
+      <p class="text-center display-4">Like the films you loved. </p>
+      <p class="text-center display-4">Tell your friends what's good</p>
+    </div>
+
+    <div class="level">
+      <div class="level-item has-text-centered">
+        <button class="button is-large">Join us!</button>
+      </div>
+
+      <div class="level-item has-text-centered">
+        <button class="button is-large">search movies</button>
+      </div>
+    </div>
+  </section>
+
+    <!-- signup will shift the hot movies down -->
+    <div ng-include="'partials/login.html'"></div>
+
   <div>
-    <div ng-include="'includes/profile.html'"></div>
+    <div ng-include="'partials/profile.html'"></div>
   </div>
+
   <div>
-    <div ng-include="'includes/topMovies.html'"></div>
+    <div ng-include="'partials/topMovies.html'"></div>
   </div>
+
   <div class="container">
     <!-- this contains the primary app, viewing movies, and comments
-  forms  -->
+    forms  -->
     <!-- container with movie search that only pops up after use submit the search -->
     <div ng-if="ctrl.showMovieList" ng-include="'partials/movieSearch.html'"></div>
     <!-- container for movie details after clicking a movie title from the movie list -->
     <div ng-if="ctrl.showMovieInfo" ng-include="'partials/movieDetails.html'"></div>
-  <footer>
-    <!-- links to our git hubs / linked in's, or link to an about team page? -->
-  </footer>
-</body>
-</html>
+
+
+    <footer>
+      <!-- links to our git hubs / linked in's, or link to an about team page? -->
+    </footer>
+  </body>
+  </html>

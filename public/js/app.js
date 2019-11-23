@@ -21,19 +21,23 @@ app.controller('MainController', ['$http', function($http){
   controller = this;
 
   // setting for session validation
-
   this.loggedInUser = null;
 
-  //
+  //setting the index for editing the form to null so the form is hidden
   this.indexOfEditForm = null;
 
+  //for profile button
   this.profileOn = false
 
+  //for the topmovies selection
   this.topMovies = []
 
+  //for topmovies button
   this.openTopMovies = false;
 
   this.topMovieDetails=[];
+
+  
 
   // ======= API CALLS ====================
 
