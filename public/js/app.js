@@ -149,6 +149,7 @@ app.controller('MainController', ['$http', function($http){
     }, function(error){
       console.log(error);
     });
+    this.homePage()
   }
 
   //////////////////////

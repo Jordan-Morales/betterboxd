@@ -59,7 +59,7 @@
     <div class="card-body">
       <h5 class="card-title">@{{comment.username}}</h5>
       <h6 class="card-subtitle mb-2 text-muted">{{comment.date | date:'MM/dd/yyyy @ h:mm:ssa'}}</h6>
-      <p class="card-text">{{comment.message}}</p>
+      <p class="card-text" ng-if="ctrl.indexOfEditForm === null">{{comment.message}}</p>
       <a href="#" class="card-link" ng-if="comment.username === ctrl.loggedInUser.username && $index !== ctrl.indexOfEditForm"
       ng-click="ctrl.indexOfEditForm = $index ; ctrl.updatedMessage=comment.message">edit</a>
 
@@ -71,7 +71,7 @@
         ng-submit="ctrl.editComment(ctrl.movieInfo.imdbID, $index)"
         ng-if="$index === ctrl.indexOfEditForm">
           <textarea class="textarea" ng-model="ctrl.updatedMessage"> </textarea>
-          <input class="button is-small" type="submit" value="Edit this Comment">
+          <input class="button is-small" type="submit" value="Edit this Comment"> <button class="button is-small" ng-click="ctrl.indexOfEditForm = null">cancel</button>
       </form>
     </div>
   </div>
