@@ -82,7 +82,7 @@ button:hover, input[type="submit"]:hover {background-color: var(--lightBlue); co
 
 .topmenu ul li {margin: 10px;}
 
-.topmenu ul li a, .topmenu div a {color: var(--lightBlue); text-decoration: none; text-transform: uppercase;
+.nav-link, .topmenu ul li a, .topmenu div a {color: var(--lightBlue); text-decoration: none; text-transform: uppercase;
     font-weight: 900; transition: var(--basictransition);}
 
 .topmenu ul li a:hover, .topmenu div a:hover {color: var(--blue); background-color: var(--lightBlue);}

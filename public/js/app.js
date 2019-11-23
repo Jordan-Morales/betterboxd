@@ -37,7 +37,8 @@ app.controller('MainController', ['$http', function($http){
 
   this.topMovieDetails=[];
 
-  
+  //to toggle the form for login
+  this.loginToggle = false
 
   // ======= API CALLS ====================
 
@@ -82,6 +83,8 @@ app.controller('MainController', ['$http', function($http){
       controller.createname = 'thanks, now login';
       controller.createusername = null;
       controller.createpassword = null;
+      this.loginToggle = false
+
     }, function(error){
       console.log(error);
       controller.createname = 'fail';
@@ -108,6 +111,7 @@ app.controller('MainController', ['$http', function($http){
       // console.log(response);
       controller.username = null;
       controller.password = null;
+      this.loginToggle = false
       controller.displayApp();
     }, function(error){
       console.log(error);
@@ -138,7 +142,7 @@ app.controller('MainController', ['$http', function($http){
   //////////////////////
 
   this.clearData = () => {
-
+    this.loginToggle = false
     this.loggedInUser = null;
     this.showMovieInfo = false
     this.showMovieList = false
@@ -455,5 +459,6 @@ this.showMenu = () => {
     }
 
 }
+
 
 }])

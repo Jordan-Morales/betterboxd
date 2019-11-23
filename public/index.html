@@ -53,9 +53,9 @@
       <p class="text-center display-4">Tell your friends what's good</p>
     </div>
 
-    <div class="level">
-      <div class="level-item has-text-centered">
-        <button class="button is-large">Join us!</button>
+    <div class="level" data-ng-init="ctrl.displayApp()">
+      <div class="level-item has-text-centered" ng-if="!ctrl.loggedInUser">
+        <button class="button is-large" ng-click="ctrl.loginToggle=true">Join us!</button>
       </div>
 
       <div class="level-item has-text-centered">
@@ -64,8 +64,10 @@
     </div>
   </section>
 
+  <section class="section">
     <!-- signup will shift the hot movies down -->
-    <div ng-include="'partials/login.html'"></div>
+    <div ng-if="ctrl.loginToggle" ng-include="'partials/login.html'"></div>
+  </section>
 
   <div>
     <div ng-include="'partials/profile.html'"></div>
