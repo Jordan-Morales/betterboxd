@@ -22,11 +22,12 @@
 
         <h5> Likes: {{ctrl.movieLikes}}</h5>
 
-        <button
+        <div
+          class="icon icon-heart"
           ng-if="ctrl.loggedInUser"
-          ng-click="ctrl.addLikes(ctrl.loggedInUser, ctrl.movieInfo)">
-           Like it
-         </button>
+          ng-class="ctrl.getLikes(ctrl.loggedInUser, ctrl.movieInfo.imdbID) ? 'filled' : toggle"
+          ng-click="toggle = !toggle; ctrl.addLikes(ctrl.loggedInUser, ctrl.movieInfo)">
+         </div>
       </div>
     </div>
   </div>
@@ -53,7 +54,7 @@
 
       <a href="#" class="card-link" ng-if="comment.username === ctrl.loggedInUser.username"
       ng-click="ctrl.deleteComment(ctrl.movieInfo.imdbID, $index)">delete</a>
-      
+
       <form
         ng-submit="ctrl.editComment(ctrl.movieInfo.imdbID, $index)"
         ng-if="$index === ctrl.indexOfEditForm">
