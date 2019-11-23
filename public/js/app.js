@@ -33,13 +33,21 @@ app.controller('MainController', ['$http', function($http){
   this.topMovies = []
 
   //for topmovies button
-  this.openTopMovies = false;
+  this.openTopMovies = true;
 
   this.topMovieDetails=[];
+
+  //to toggle the form for signup
+  this.signupSection = false
 
   //to toggle the form for login
   this.loginToggle = false
 
+  //to toggle the movie search form from the page
+  this.showSearch = false
+
+  //to toggle the movie search form from the page
+  this.showNav = false
   // ======= API CALLS ====================
 
   // --- Users+Session Datapoint
@@ -57,6 +65,10 @@ app.controller('MainController', ['$http', function($http){
       // console.log(response)
       controller.loggedInUser = response.data
       controller.topFive();
+      controller.openTopMovies = true
+      controller.profileOn = true
+      controller.showNav = false
+      controller.showMovieList = false
       // console.log(controller.loggedInUser)
       // console.log(controller.loggedInUser.moviesLiked)
     }, function(){
@@ -80,10 +92,8 @@ app.controller('MainController', ['$http', function($http){
       }
     }).then(function(response){
       // console.log(response);
-      controller.createname = 'thanks, now login';
       controller.createusername = null;
       controller.createpassword = null;
-      this.loginToggle = false
 
     }, function(error){
       console.log(error);
@@ -113,6 +123,7 @@ app.controller('MainController', ['$http', function($http){
       controller.password = null;
       this.loginToggle = false
       controller.displayApp();
+
     }, function(error){
       console.log(error);
       controller.username = 'fail';
@@ -143,6 +154,7 @@ app.controller('MainController', ['$http', function($http){
 
   this.clearData = () => {
     this.loginToggle = false
+    this.signupSection = false
     this.loggedInUser = null;
     this.showMovieInfo = false
     this.showMovieList = false
@@ -159,6 +171,10 @@ app.controller('MainController', ['$http', function($http){
       url: 'https://www.omdbapi.com/?apikey=53aa2cd6&s='+this.movieTitle
     }).then( response =>{
       this.movieList = response.data.Search
+      this.showMovieInfo = false
+      this.openTopMovies = false
+      this.profileOn = false
+
       // console.log(this.movieList);
     }, error => {
       console.log(error);
@@ -177,7 +193,6 @@ app.controller('MainController', ['$http', function($http){
       url: 'https://www.omdbapi.com/?apikey=53aa2cd6&i='+movieId
     }).then( response =>{
       this.movieInfo = response.data;
-
       this.getComment(movieId);
       // console.log(this.movieInfo);
     }, error => {
@@ -420,16 +435,43 @@ this.addLikes = (user, movieObject) => {
     this.movieTitle = ''
   }
 
-///////////////////
-//Function to toggle display of top movies
-///////////////////
 
-  this.showTopMovies = () => {
+  ///////////////////
+  //Function to reset the booleans when clicking "home"
+  ///////////////////
+    this.homePage = () => {
+        // console.log('toggle');
+        this.openTopMovies = true
+        this.profileOn = true
+        this.showNav = false
+        this.showMovieList = false
+        this.signupSection = false
+        this.showSearch = false
+        this.showMovieInfo = false
 
-      // console.log('toggle');
-      controller.openTopMovies = !controller.openTopMovies;
+    }
+
+
+  ///////////////////
+  //Function to toggle display the hot movies
+  ///////////////////
+    this.showTopMovies = () => {
+        // console.log('toggle');
+        this.openTopMovies = !this.openTopMovies;
+    }
+
+///////////////////
+//Function to toggle display for sign up
+///////////////////
+  this.showSignUp = () => {
+      console.log(this.showNav);
+      console.log(this.loggedInUser);
+      this.signupSection = !this.signupSection;
+      this.showMovieList = !this.showMovieList
+      this.openTopMovies = false
 
   }
+
 ////////////////////////
 //function to get details of top movies from omdb
 /////////////////////////

@@ -29,11 +29,14 @@ h1,h2,h3,h4,h5,h6 {font-family: var(--font-title)}
 
 /* BUTTON STYLING */
 
-button, input[type="submit"] {padding: 6px; margin: 6px; background-color: var(--mustard); color: var(--ivory); transition: var(--basictransition); border-radius: 7px;}
+button, input[type="submit"] {border-style: none; padding: 6px; margin: 6px; background-color: var(--mustard); color: var(--ivory); transition: var(--basictransition); border-radius: 7px;}
 
-.button {background-color: var(--mustard); color: var(--ivory); transition: var(--basictransition);}
+.button {border-style: none; background-color: var(--mustard); color: var(--ivory); transition: var(--basictransition);}
 
 button:hover, input[type="submit"]:hover {background-color: var(--lightBlue); color: var(--blue);}
+
+/* HEADER STYLING */
+.header{background-color:var(--blue) ; color: ghostwhite;}
 
 /* LOGO STYLING */
 
@@ -51,7 +54,7 @@ button:hover, input[type="submit"]:hover {background-color: var(--lightBlue); co
 
 .profile div {}
 
-.profile div img {height: 200px; margin: 10px;}
+.profile div img {height: 300px; margin: 10px;}
 
 .profile div ul {display: flex; flex-wrap: wrap; justify-content: space-around;}
 
@@ -91,6 +94,12 @@ button:hover, input[type="submit"]:hover {background-color: var(--lightBlue); co
 
 .mobiletoggle {display: none}
 
+
+/* STYLING FOR MOVIE DETAILS CARDS */
+.card{color: var(--blue)}
+
+/* STYLING FOR HOT MOVIES SECTION */
+.hotMovies{ color: var(--red);}
 
 /* ----------------------- */
 

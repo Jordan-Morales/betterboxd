@@ -38,52 +38,83 @@
 <!-- body -->
 
 <body ng-controller="MainController as ctrl">
-  <!-- nav bar should contain search bar, login / signup features (signup will end up showing another section) -->
-  <!-- search box -->
-  <div ng-include="'partials/navigation.html'"></div>
+  <div ng-if="ctrl.loggedInUser || ctrl.showNav" ng-include="'partials/navigation.html'"></div>
 
-  <section class="section">
-    <!-- logo -->
-      <div class="animated heartBeat logocontainer">
-        <span class="logo"><span class="b animated heartBeat">B</span>etter<span class="b animated heartBeat">B</span>oxd</span>
-      </div>
-    <!-- subtitle -->
-    <div>
-      <p class="text-center display-4">Like the films you loved. </p>
-      <p class="text-center display-4">Tell your friends what's good</p>
-    </div>
-
-    <div class="level" data-ng-init="ctrl.displayApp()">
-      <div class="level-item has-text-centered" ng-if="!ctrl.loggedInUser">
-        <button class="button is-large" ng-click="ctrl.loginToggle=true">Join us!</button>
+  <div class="header" ng-if="!ctrl.showNav">
+    <!-- nav bar should contain search bar, login / signup features (signup will end up showing another section) -->
+    <!-- search box -->
+    <section class="section">
+      <div ng-if="!ctrl.loggedInUser">
+        <!-- logo -->
+          <div class="animated heartBeat logocontainer">
+            <span class="logo"><span class="b animated heartBeat">B</span>etter<span class="b animated heartBeat">B</span>oxd</span>
+          </div>
+        <!-- subtitle -->
+        <div>
+          <p class="text-center display-4">Like the films you loved. </p>
+          <p class="text-center display-4">Tell your friends what's good</p>
+        </div>
       </div>
 
-      <div class="level-item has-text-centered">
-        <button class="button is-large">search movies</button>
+      <div ng-if="ctrl.loggedInUser" class="section">
+        <p class="text-center display-4">Welcome back, {{ctrl.loggedInUser.name}} </p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section">
+
+
+    <section class="section">
+      <div class="level"  data-ng-init="ctrl.displayApp()">
+        <div class="level-item has-text-centered" ng-if="!ctrl.loggedInUser">
+          <button class="button is-large" ng-click="ctrl.signupSection = true; ctrl.showSearch = false">Join us!</button>
+        </div>
+
+        <div class="level-item has-text-centered" >
+          <button class="button is-large" ng-if="!ctrl.showSearch" ng-click="ctrl.showSearch = true">search movies</button>
+
+          <div class="field is-horizontal">
+            <form class="form-inline" ng-if="ctrl.showSearch" ng-submit="ctrl.getMovies(); ctrl.showMovieList = true; ctrl.showNav = true">
+              <div class="control">
+                <input class="input is-large" type="search" placeholder="movie title" ng-model="ctrl.movieTitle"/>
+              </div>
+              <div class="control">
+                <input class="button is-large" type="submit" value="search"/>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="section" ng-if="ctrl.signupSection">
     <!-- signup will shift the hot movies down -->
-    <div ng-if="ctrl.loginToggle" ng-include="'partials/login.html'"></div>
+    <div ng-include="'partials/login.html'"></div>
   </section>
 
-  <div>
+  <div ng-if="ctrl.loggedInUser">
     <div ng-include="'partials/profile.html'"></div>
   </div>
 
-  <div>
-    <div ng-include="'partials/topMovies.html'"></div>
+  <section class="section hotMovies">
+    <div>
+      <div ng-include="'partials/topMovies.html'"></div>
+    </div>
+  </section>
+
+
+  <!-- this contains the primary app, viewing movies, and comments
+  forms  -->
+  <!-- container with movie search that only pops up after use submit the search -->
+  <!-- container for movie details after clicking a movie title from the movie list -->
+  <div class="container">
+    <div ng-if="ctrl.showMovieList" ng-include="'partials/movieSearch.html'"></div>
+    <div ng-if="ctrl.showMovieInfo" ng-include="'partials/movieDetails.html'"></div>
   </div>
 
-  <div class="container">
-    <!-- this contains the primary app, viewing movies, and comments
-    forms  -->
-    <!-- container with movie search that only pops up after use submit the search -->
-    <div ng-if="ctrl.showMovieList" ng-include="'partials/movieSearch.html'"></div>
-    <!-- container for movie details after clicking a movie title from the movie list -->
-    <div ng-if="ctrl.showMovieInfo" ng-include="'partials/movieDetails.html'"></div>
+
+
 
 
     <footer>
