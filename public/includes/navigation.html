@@ -1,0 +1,19 @@
+<div class="topmenu">
+<ul id="menu">
+    <li><a href="">Sam|LinkedIN</a></li>
+    <li><a href="">Sam|Github</a></li>
+    <li><a href="">Jordan|LinkedIN</a></li>
+    <li><a href="">Jordan|Github</a></li>
+    <li><a href="">Alex|LinkedIN</a></li>
+    <li><a href="">Alex|Github</a></li>
+    <li><a href="">Project Github</a></li>
+    <li><a href="" ng-click="ctrl.showTopMovies()" ng-if="ctrl.loggedInUser">Top Movies</a></li>
+    <li><a href="" ng-click="ctrl.showProfile()" ng-if="ctrl.loggedInUser">Profile</a></li>
+    <li><a href="" ng-click="ctrl.logOut(ctrl.clearData)" ng-if="ctrl.loggedInUser">logout</a></li>
+</ul>
+<div class="mobiletoggle" ><a href="" ng-click="ctrl.showMenu()">MENU</div>
+<form ng-submit="ctrl.getMovies(); ctrl.showMovieList = true">
+  <input type="text" placeholder="movie title" ng-model="ctrl.movieTitle"/>
+  <input type="submit" value="search"/>
+</form>
+</div>

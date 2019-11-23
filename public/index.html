@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" ng-app="betterboxdApp">
 <head>
-  <meta charset="utf-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <!-- angular script -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js" charset="utf-8"></script>
   <!-- app.js link -->
@@ -25,11 +27,9 @@
     <div class="animated heartBeat logocontainer">
         <span class="logo"><span class="b animated heartBeat">B</span>etter<span class="b animated heartBeat">B</span>oxed</span>
     </div>
+    <div ng-include="'includes/navigation.html'"></div>
     <!-- search box -->
-    <form ng-submit="ctrl.getMovies(); ctrl.showMovieList = true">
-      <input type="text" placeholder="movie title" ng-model="ctrl.movieTitle">
-      <input type="submit" value="search"></button>
-    </form>
+
     <!-- logo -->
     <!-- subtitle -->
 <div ng-include="'includes/login.html'"></div>
