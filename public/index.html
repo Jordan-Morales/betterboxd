@@ -46,9 +46,9 @@
     <section class="section">
       <div ng-if="!ctrl.loggedInUser">
         <!-- logo -->
-          <div class="animated heartBeat logocontainer">
-            <span class="logo"><span class="b animated heartBeat">B</span>etter<span class="b animated heartBeat">B</span>oxd</span>
-          </div>
+        <div class="animated heartBeat logocontainer">
+          <span class="logo"><span class="b animated heartBeat">B</span>etter<span class="b animated heartBeat">B</span>oxd</span>
+        </div>
         <!-- subtitle -->
         <div>
           <p class="text-center display-4">Like the films you loved. </p>
@@ -108,17 +108,17 @@
   forms  -->
   <!-- container with movie search that only pops up after use submit the search -->
   <!-- container for movie details after clicking a movie title from the movie list -->
-  <div class="container">
+  <section class="section">
     <div ng-if="ctrl.showMovieList" ng-include="'partials/movieSearch.html'"></div>
     <div ng-if="ctrl.showMovieInfo" ng-include="'partials/movieDetails.html'"></div>
-  </div>
+  </section>
 
 
 
 
 
-    <footer>
-      <!-- links to our git hubs / linked in's, or link to an about team page? -->
-    </footer>
+  <!-- footer - links to our git hubs / linked in's, or link to an about team page? -->
+  <footer class="footer" ng-include="'partials/footer.html'">
+
   </body>
   </html>

@@ -48,6 +48,10 @@ app.controller('MainController', ['$http', function($http){
 
   //to toggle the movie search form from the page
   this.showNav = false
+
+  //to toggle the new comment form in the page
+  this.commentForm = false
+
   // ======= API CALLS ====================
 
   // --- Users+Session Datapoint
@@ -67,7 +71,6 @@ app.controller('MainController', ['$http', function($http){
       controller.topFive();
       controller.openTopMovies = true
       controller.profileOn = true
-      controller.showNav = false
       controller.showMovieList = false
       // console.log(controller.loggedInUser)
       // console.log(controller.loggedInUser.moviesLiked)
@@ -122,6 +125,7 @@ app.controller('MainController', ['$http', function($http){
       controller.username = null;
       controller.password = null;
       this.loginToggle = false
+      controller.showNav = false
       controller.displayApp();
 
     }, function(error){
@@ -198,21 +202,23 @@ app.controller('MainController', ['$http', function($http){
     }, error => {
       console.log(error);
     })
+    this.showNav = true;
     this.showMovieInfo = true;
+    this.commentForm = false
   }
 
   this.firstView = (movieId) => {
-   $http({
-     method:'POST',
-     url:'/moviesapi',
-     data: {
-       omdbID: movieId
-     }
-   }).then( response => {
-     // console.log(movieId);
-   }, error => {
-     console.log(error);
-   })
+    $http({
+      method:'POST',
+      url:'/moviesapi',
+      data: {
+        omdbID: movieId
+      }
+    }).then( response => {
+      // console.log(movieId);
+    }, error => {
+      console.log(error);
+    })
   }
 
   this.getComment = (movieId) => {
@@ -248,6 +254,8 @@ app.controller('MainController', ['$http', function($http){
       this.newMessage = null;
       this.getComment(movieId)
     })
+
+    this.commentForm = false
   }
 
   this.deleteComment = (movieId, index) => {
@@ -342,27 +350,27 @@ app.controller('MainController', ['$http', function($http){
     //   }
     //   return result
     //   console.log(result);
-    }
+  }
 
-    // console.log(foundMovie);
-
-
-    // if (movieId === foundMovie) {
-    // }
-
-    //     // then do:
-    //   //else do:
-      // $http({
-      //   method:'GET',
-      //   url:'/moviesapi/'+ user._id + '/' + movieId,
-      // }).then( response => {
-
-      //
-      // })
+  // console.log(foundMovie);
 
 
-this.addLikes = (user, movieObject) => {
-  // console.log(movieObject);
+  // if (movieId === foundMovie) {
+  // }
+
+  //     // then do:
+  //   //else do:
+  // $http({
+  //   method:'GET',
+  //   url:'/moviesapi/'+ user._id + '/' + movieId,
+  // }).then( response => {
+
+  //
+  // })
+
+
+  this.addLikes = (user, movieObject) => {
+    // console.log(movieObject);
     $http({
       method:'PUT',
       url:'/users/'+ user._id + '/' + movieObject.imdbID,
@@ -370,62 +378,62 @@ this.addLikes = (user, movieObject) => {
         movie: movieObject
       }
     }).then( response => {
-        // console.log(response);
-        this.getInfo(movieObject.imdbID)
+      // console.log(response);
+      this.getInfo(movieObject.imdbID)
     })
   }
-/////////////////
-// function to toggle display of profile
-/////////////////
+  /////////////////
+  // function to toggle display of profile
+  /////////////////
 
   this.showProfile = () => {
 
-      // console.log(controller.profileOn);
-      // console.log('toggle');
-      controller.profileOn = !controller.profileOn;
-      // console.log(controller.profileOn);
-      // console.log(controller.loggedInUser.moviesLiked)
+    // console.log(controller.profileOn);
+    // console.log('toggle');
+    controller.profileOn = !controller.profileOn;
+    // console.log(controller.profileOn);
+    // console.log(controller.loggedInUser.moviesLiked)
 
   }
-/////////////////
-//function to build array of top movies
-///////////////
+  /////////////////
+  //function to build array of top movies
+  ///////////////
 
   this.topFive = () => {
     $http({
       method:'GET',
       url: '/moviesapi/'
     }).then( response =>{
-    // console.log('the response is next')
-    // console.log(response)
-    let movieList = response.data;
-    this.topMovies = [];
-    while (this.topMovies.length < 5){
+      // console.log('the response is next')
+      // console.log(response)
+      let movieList = response.data;
+      this.topMovies = [];
+      while (this.topMovies.length < 5){
         // console.log('while begins');
         let topLikes = 0;
         let topMovie = {};
         let topMovieIndex;
         // console.log(movieList);
         for (movie in movieList){
-            // console.log('for begins');
-            // console.log(movie);
-            // console.log(movieList[movie]);
-            let currentLikes = movieList[movie].likes;
-            if (currentLikes > topLikes){
-                topLikes = currentLikes;
-                // console.log('the current movie is ' + movieList[movie])
-                topMovie = movieList[movie];
-                topMovieIndex = movie;
-            }
+          // console.log('for begins');
+          // console.log(movie);
+          // console.log(movieList[movie]);
+          let currentLikes = movieList[movie].likes;
+          if (currentLikes > topLikes){
+            topLikes = currentLikes;
+            // console.log('the current movie is ' + movieList[movie])
+            topMovie = movieList[movie];
+            topMovieIndex = movie;
+          }
         }
         // console.log('the winning movie is' + topMovie.omdbID)
         this.topMovies.push(topMovie);
         movieList[topMovieIndex].likes=0;
         // console.log(this.topMovies)
 
-    }
-    // console.log(this.topMovies)
-    this.getTopMovieInfo();
+      }
+      // console.log(this.topMovies)
+      this.getTopMovieInfo();
 
     }, error => {
       console.log(error);
@@ -439,68 +447,68 @@ this.addLikes = (user, movieObject) => {
   ///////////////////
   //Function to reset the booleans when clicking "home"
   ///////////////////
-    this.homePage = () => {
-        // console.log('toggle');
-        this.openTopMovies = true
-        this.profileOn = true
-        this.showNav = false
-        this.showMovieList = false
-        this.signupSection = false
-        this.showSearch = false
-        this.showMovieInfo = false
+  this.homePage = () => {
+    // console.log('toggle');
+    this.openTopMovies = true
+    this.profileOn = true
+    this.showNav = false
+    this.showMovieList = false
+    this.signupSection = false
+    this.showSearch = false
+    this.showMovieInfo = false
 
-    }
+  }
 
 
   ///////////////////
   //Function to toggle display the hot movies
   ///////////////////
-    this.showTopMovies = () => {
-        // console.log('toggle');
-        this.openTopMovies = !this.openTopMovies;
-    }
+  this.showTopMovies = () => {
+    // console.log('toggle');
+    this.openTopMovies = !this.openTopMovies;
+  }
 
-///////////////////
-//Function to toggle display for sign up
-///////////////////
+  ///////////////////
+  //Function to toggle display for sign up
+  ///////////////////
   this.showSignUp = () => {
-      console.log(this.showNav);
-      console.log(this.loggedInUser);
-      this.signupSection = !this.signupSection;
-      this.showMovieList = !this.showMovieList
-      this.openTopMovies = false
+    console.log(this.showNav);
+    console.log(this.loggedInUser);
+    this.signupSection = !this.signupSection;
+    this.showMovieList = !this.showMovieList
+    this.openTopMovies = false
 
   }
 
-////////////////////////
-//function to get details of top movies from omdb
-/////////////////////////
+  ////////////////////////
+  //function to get details of top movies from omdb
+  /////////////////////////
 
   this.getTopMovieInfo = async (movieId) => {
     //turning into false to hide the movie list after clicking
     for (i=0;i<this.topMovies.length;i++){
-    // console.log(this.topMovies[i].omdbID);
-    // console.log(i);
-    response = await $http({
-      method:'GET',
-      url: 'https://www.omdbapi.com/?apikey=53aa2cd6&i='+this.topMovies[i].omdbID });
-  this.topMovieDetails[i] =  await response.data;
-      // console.log(this.topMovieDetails);
-}}
+      // console.log(this.topMovies[i].omdbID);
+      // console.log(i);
+      response = await $http({
+        method:'GET',
+        url: 'https://www.omdbapi.com/?apikey=53aa2cd6&i='+this.topMovies[i].omdbID });
+        this.topMovieDetails[i] =  await response.data;
+        // console.log(this.topMovieDetails);
+      }}
 
-/////////////////
-//Function to toggle movies on mobile
-/////////////////
-this.showMenu = () => {
+      /////////////////
+      //Function to toggle movies on mobile
+      /////////////////
+      this.showMenu = () => {
 
-    topMenu = document.getElementById('menu');
-    if (menu.style.display == 'none'){
-        menu.style.display = 'block';
-    } else {
-        menu.style.display = 'none';
-    }
+        topMenu = document.getElementById('menu');
+        if (menu.style.display == 'none'){
+          menu.style.display = 'block';
+        } else {
+          menu.style.display = 'none';
+        }
 
-}
+      }
 
 
-}])
+    }])

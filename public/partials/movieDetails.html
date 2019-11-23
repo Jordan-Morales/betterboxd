@@ -34,14 +34,26 @@
 </div>
 
 
+<section class="section">
+  <h3> Comments:</h3>
 
- <h3> Comments:</h3>
- <form
-   ng-submit="ctrl.newComment(ctrl.movieInfo.imdbID)"
-   ng-if="ctrl.loggedInUser">
-     <input ng-model="ctrl.newMessage">
-     <input type="submit" value="Create a Comment">
- </form>
+   <button class="button is-medium" ng-if="!ctrl.commentForm" ng-click="ctrl.commentForm = true">new comment</button>
+
+   <div ng-if="ctrl.commentForm">
+     <form
+       ng-submit="ctrl.newComment(ctrl.movieInfo.imdbID)"
+       ng-if="ctrl.loggedInUser">
+         <textarea class="textarea" rows="8" ng-model="ctrl.newMessage"> </textarea>
+         <input class="button is-medium" type="submit" value="Submit Comment"> <button class="button is-medium"  ng-click="ctrl.commentForm = false">cancel</button>
+     </form>
+   </div>
+
+
+</section>
+
+
+
+
 <div ng-repeat="comment in ctrl.movieComments">
   <div class="card">
     <div class="card-body">
@@ -49,7 +61,7 @@
       <h6 class="card-subtitle mb-2 text-muted">{{comment.date | date:'MM/dd/yyyy @ h:mm:ssa'}}</h6>
       <p class="card-text">{{comment.message}}</p>
       <a href="#" class="card-link" ng-if="comment.username === ctrl.loggedInUser.username && $index !== ctrl.indexOfEditForm"
-      ng-click="ctrl.indexOfEditForm = $index ; ctrl.updatedDescription=null">edit</a>
+      ng-click="ctrl.indexOfEditForm = $index ; ctrl.updatedMessage=comment.message">edit</a>
 
 
       <a href="#" class="card-link" ng-if="comment.username === ctrl.loggedInUser.username"
@@ -58,8 +70,8 @@
       <form
         ng-submit="ctrl.editComment(ctrl.movieInfo.imdbID, $index)"
         ng-if="$index === ctrl.indexOfEditForm">
-          <input ng-model="ctrl.updatedMessage">
-          <input type="submit" value="Edit this Comment">
+          <textarea class="textarea" ng-model="ctrl.updatedMessage"> </textarea>
+          <input class="button is-small" type="submit" value="Edit this Comment">
       </form>
     </div>
   </div>

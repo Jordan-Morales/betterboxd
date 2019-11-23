@@ -101,6 +101,16 @@ button:hover, input[type="submit"]:hover {background-color: var(--lightBlue); co
 /* STYLING FOR HOT MOVIES SECTION */
 .hotMovies{ color: var(--red);}
 
+/* STYLING FOR FOOTER */
+.footer, .content{background-color: var(--ivory); color: var(--blue;)}
+.content p{color: var(--blue;)}
+
+.content a:hover{color: var(--red;)}
+
+
+
+
+
 /* ----------------------- */
 
 ul{
