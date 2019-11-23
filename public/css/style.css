@@ -78,7 +78,12 @@ button:hover, input[type="submit"]:hover {background-color: var(--lightBlue); co
 
 .topmenu ul li {margin: 10px;}
 
-.topmenu ul li a, .topmenu div a {color: var(--lightBlue); text-decoration: none; text-transform: uppercase;}
+.topmenu ul li a, .topmenu div a {color: var(--lightBlue); text-decoration: none; text-transform: uppercase;
+    font-weight: 900; transition: var(--basictransition);}
+
+.topmenu ul li a:hover, .topmenu div a:hover {color: var(--blue); background-color: var(--lightBlue);}
+
+.topmenu form {margin-top: 7px;}
 
 .mobiletoggle {display: none}
 
@@ -115,7 +120,7 @@ a{
 
 @media only screen and (max-width: 550px) {
 
-.topmenu {flex-direction: column;}
+.topmenu {flex-direction: column; align-content: center;}
 #menu {display: none;}
 .logo {font-family: var(--font-logo); font-size: 200%; text-align: center;}
 .mobiletoggle {display: block;}

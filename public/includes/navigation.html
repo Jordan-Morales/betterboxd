@@ -11,7 +11,9 @@
     <li><a href="" ng-click="ctrl.showProfile()" ng-if="ctrl.loggedInUser">Profile</a></li>
     <li><a href="" ng-click="ctrl.logOut(ctrl.clearData)" ng-if="ctrl.loggedInUser">logout</a></li>
 </ul>
-<div class="mobiletoggle" ><a href="" ng-click="ctrl.showMenu()">MENU</div>
+<div class="mobiletoggle" ><a href="" ng-click="ctrl.showMenu()"><i class="fas fa-bars"></i>
+
+</div>
 <form ng-submit="ctrl.getMovies(); ctrl.showMovieList = true">
   <input type="text" placeholder="movie title" ng-model="ctrl.movieTitle"/>
   <input type="submit" value="search"/>
