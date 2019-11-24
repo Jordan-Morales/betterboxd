@@ -29,13 +29,20 @@ h1,h2,h3,h4,h5,h6 {font-family: var(--font-title)}
 
 /* BUTTON STYLING */
 
-button, input[type="submit"] {padding: 6px; margin: 6px; background-color: var(--mustard); color: var(--ivory); transition: var(--basictransition); border-radius: 5px;}
+button, input[type="submit"] {border-style: none; padding: 6px; margin: 6px; background-color: var(--mustard); color: var(--ivory); transition: var(--basictransition); border-radius: 7px;}
+
+.button {border-style: none; background-color: var(--mustard); color: var(--ivory); transition: var(--basictransition);}
 
 button:hover, input[type="submit"]:hover {background-color: var(--lightBlue); color: var(--blue);}
 
+/* HEADER STYLING */
+.header{background-color:var(--blue) ; color: ghostwhite;}
+
 /* LOGO STYLING */
 
-.logo {font-family: var(--font-logo); font-size: 500%; text-align: center;}
+.logo {font-family: var(--font-logo); font-weight: bold; font-size: 500%; text-align: center;}
+
+.navlogo {font-family: var(--font-logo); font-weight: bold; text-align: center;}
 
 .logocontainer {text-align: center;}
 
@@ -47,7 +54,7 @@ button:hover, input[type="submit"]:hover {background-color: var(--lightBlue); co
 
 .profile div {}
 
-.profile div img {height: 200px; margin: 10px;}
+.profile div img {height: 300px; margin: 10px;}
 
 .profile div ul {display: flex; flex-wrap: wrap; justify-content: space-around;}
 
@@ -78,7 +85,7 @@ button:hover, input[type="submit"]:hover {background-color: var(--lightBlue); co
 
 .topmenu ul li {margin: 10px;}
 
-.topmenu ul li a, .topmenu div a {color: var(--lightBlue); text-decoration: none; text-transform: uppercase;
+.nav-link, .topmenu ul li a, .topmenu div a {color: var(--lightBlue); text-decoration: none; text-transform: uppercase;
     font-weight: 900; transition: var(--basictransition);}
 
 .topmenu ul li a:hover, .topmenu div a:hover {color: var(--blue); background-color: var(--lightBlue);}
@@ -86,6 +93,22 @@ button:hover, input[type="submit"]:hover {background-color: var(--lightBlue); co
 .topmenu form {margin-top: 7px;}
 
 .mobiletoggle {display: none}
+
+
+/* STYLING FOR MOVIE DETAILS CARDS */
+.card{color: var(--blue)}
+
+/* STYLING FOR HOT MOVIES SECTION */
+.hotMovies{ color: var(--red);}
+
+/* STYLING FOR FOOTER */
+.footer, .content{background-color: var(--ivory); color: var(--blue;)}
+.content p{color: var(--blue;)}
+
+.content a:hover{color: var(--red;)}
+
+
+
 
 
 /* ----------------------- */

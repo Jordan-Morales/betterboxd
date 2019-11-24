@@ -1,11 +1,8 @@
-<div class="profile" ng-if="ctrl.loggedInUser">
-
-
-
+<div class="profile">
     <div ng-if="ctrl.profileOn">
+        <h1>Your Favorites</h1>
+        <br>
 
-        <h1>{{ctrl.loggedInUser.name}}<h1>
-        <h3>Movies Liked</h3>
         <ul>
             <li ng-repeat="movie in ctrl.loggedInUser.moviesLiked">
             <img ng-click="ctrl.getInfo(movie.imdbID)" ng-src={{movie.Poster}} ng-click="main.getInfo(movie.title)" class="animated tada"/>
@@ -13,5 +10,6 @@
         </ul>
 
     </div>
-
+    <hr>
+    
 </div>

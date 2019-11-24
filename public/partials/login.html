@@ -1,21 +1,20 @@
 <div ng-init="ctrl.displayApp(ctrl.getMovies)" class="login">
-    <h1 ng-if="!ctrl.loggedInUser">Sign Up/Login</h1>
-
-
     <div class="formbar" ng-if="!ctrl.loggedInUser">
-        <form ng-submit="ctrl.createUser()">
-            <h2>Create User</h2>
+        <form ng-if="!ctrl.loginToggle" ng-submit="ctrl.createUser(); ctrl.loginToggle=true">
+            <h2>sign up</h2>
             <input type="text" ng-model="ctrl.createname" placeholder="name"/>
             <input type="text" ng-model="ctrl.createusername" placeholder="username"/>
             <input type="password" ng-model="ctrl.createpassword" placeholder="password"/>
             <input type="submit" value="Create User">
+            <a href="#" ng-click="ctrl.loginToggle=true">already a member? log in</a>
         </form>
 
 
-        <form ng-submit="ctrl.logIn(ctrl.getMovies)">
+        <form ng-if="ctrl.loginToggle" ng-submit="ctrl.logIn(ctrl.getMovies)">
             <h2>Log In</h2>
             <input type="text" ng-model="ctrl.username" placeholder="username"/>
             <input type="password" ng-model="ctrl.password" placeholder="password"/>
             <input type="submit" value="Log In">
+            <a href="#" ng-click="ctrl.loginToggle=false">not yet a member? signup</a>
         </form>
     </div>
