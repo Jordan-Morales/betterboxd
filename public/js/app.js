@@ -350,7 +350,9 @@ app.controller('MainController', ['$http', function($http){
 
   // edit movie comment
 
-
+  /////////////////
+  // function to toggle display of filled heart
+  /////////////////
 
   this.getLikes = (user, movieId) => {
     // console.log('get likes', user);
@@ -360,11 +362,10 @@ app.controller('MainController', ['$http', function($http){
     } else {
     this.checkArray = user.moviesLiked;
     if (this.checkArray.some(movie => movie.imdbID === movieId)){
-      // console.log('here');
-      return true
+      return 'filled'
     } else {
-      // console.log('not here')
-      return false
+      return 'toggle'
+    }
     }
   }
     // console.log('are we getting here?');
@@ -382,7 +383,7 @@ app.controller('MainController', ['$http', function($http){
     //   }
     //   return result
     //   console.log(result);
-  }
+
 
   // console.log(foundMovie);
 
@@ -399,7 +400,9 @@ app.controller('MainController', ['$http', function($http){
 
   //
   // })
-
+  /////////////////
+  // function to add likes to moviesLiked
+  /////////////////
 
   this.addLikes = (user, movieObject) => {
     // console.log(user);
