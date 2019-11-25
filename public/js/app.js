@@ -213,6 +213,8 @@ app.controller('MainController', ['$http', function($http){
 
   this.getInfo = (movieId) => {
     //turning into false to hide the movie list after clicking
+    let heart = angular.element(document.querySelectorAll('#heart'));
+    heart.removeClass('filled');
     this.showMovieList = false
     $http({
       method:'GET',
@@ -330,7 +332,7 @@ app.controller('MainController', ['$http', function($http){
 
   this.getLikes = (user, movieId) => {
     if (user.moviesLiked === undefined) {
-      console.log('movie undefined');
+      // console.log('movie undefined');
       return;
     } else {
       this.checkArray = user.moviesLiked;
@@ -345,8 +347,9 @@ app.controller('MainController', ['$http', function($http){
   /////////////////
   // function to add likes to moviesLiked
   /////////////////
-
   this.addLikes = (user, movieObject) => {
+    let heart = angular.element(document.querySelectorAll('#heart'));
+    let movieId = movieObject.imdbID
     $http({
       method:'PUT',
       url:'/users/'+ user._id + '/' + movieObject.imdbID,
@@ -355,8 +358,49 @@ app.controller('MainController', ['$http', function($http){
       }
     }).then( response => {
       this.getInfo(movieObject.imdbID)
-    })
+      console.log('why no add class');
+      console.log(movie);
+      console.log(movieId);
+      heart.addClass('filled');
+      })
+    }
+  this.decLikes = (user, movieObject) => {
+    let heart = angular.element(document.querySelectorAll('#heart'));
+    let movieId = movieObject.imdbID
+    $http({
+      method:'PUT',
+      url:'/users/'+ user._id + '/' + movieObject.imdbID,
+      data: {
+        movie: movieObject
+      }
+    }).then( response => {
+      this.getInfo(movieObject.imdbID)
+      console.log('why no remove class');
+      heart.removeClass('filled');
+      })
   }
+  this.toggleLikes = (user, movieObject) => {
+    console.log(movieObject);
+    let movieId = movieObject.imdbID
+    console.log(movieId);
+    if (user.moviesLiked === undefined) {
+      console.log('movie undefined');
+      return;
+    } else {
+      let checkArray = user.moviesLiked;
+      console.log(this.checkArray);
+      console.log(this.checkArray.some(movie => movie.omdbID === movieId));
+
+      if (checkArray.some(movie => movie.imdbID === movieId)){
+        this.decLikes(user, movieObject)
+        }
+        else {
+          this.addLikes(user, movieObject)
+
+      }
+    }
+  }
+
   /////////////////
   // function to toggle display of profile
   /////////////////
@@ -377,7 +421,7 @@ app.controller('MainController', ['$http', function($http){
       this.topMovies = [];
       while (this.topMovies.length < 5){
         let topLikes = 0;
-        let topMovie = {};
+        // let topMovie = {};
         let topMovieIndex;
         for (movie in movieList){
           let currentLikes = movieList[movie].likes;

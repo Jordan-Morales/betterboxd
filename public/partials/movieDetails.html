@@ -24,9 +24,10 @@
 
         <div
           class="icon icon-heart"
+          id="heart"
           ng-if="ctrl.loggedInUser"
           ng-class="ctrl.getLikes(ctrl.updatedUser, ctrl.movieInfo.imdbID)"
-          ng-click="ctrl.addLikes(ctrl.updatedUser, ctrl.movieInfo)">
+          ng-click="ctrl.toggleLikes(ctrl.updatedUser, ctrl.movieInfo); ctrl.getLikes(ctrl.updatedUser, ctrl.movieInfo.imdbID)">
          </div>
       </div>
     </div>

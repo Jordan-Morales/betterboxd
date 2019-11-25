@@ -40,8 +40,8 @@ router.put('/:id', (req, res)=>{
 // Like/Unlike Route
 router.put('/:userID/:movieID', (req, res)=>{
   Users.findById(req.params.userID, (err, updatedUser)=>{
-    likeArray = updatedUser.moviesLiked.filter((movie) => {return movie.imdbID == req.params.movieID});
-    if (likeArray.length > 0){
+    likeArray = updatedUser.moviesLiked
+    if (likeArray.some(movie => movie.imdbID === req.params.movieID)){
       Users.findOneAndUpdate({_id:req.params.userID}, {$pull:{moviesLiked:req.body.movie}}, {new:true}, (error, updatedUser) => {
         res.redirect('/moviesapi/'+ req.params.movieID + '/declikes/');
       })
