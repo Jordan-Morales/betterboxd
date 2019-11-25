@@ -7,7 +7,5 @@
 this.profileOn = false
 
 this.showProfile () => {
-
-    controller.profileOn = !controller.profileOn;
-
+  controller.profileOn = !controller.profileOn;
 }

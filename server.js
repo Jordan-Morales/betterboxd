@@ -26,7 +26,7 @@ const mongoURI = host;
 // ========================
 // MIDDLEWARE
 // ========================
-// app.use(express.urlencoded({extended:false}));
+
 app.use(session({
     secret: "iamlikeabird", //some random string
     resave: false,
