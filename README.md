@@ -27,8 +27,8 @@ In this project we sought out to develop a clone of letterboxd.
 -Day 1: met, plan, mapped out all basic routes and functions.
 -Day 2: Finished writing MVP functionality and started stretch goals.
 -Day 3: Finished out all functionality and some stretch goals, collaborated and decided on a frontend.
--Day 4:
--Day 5:
+-Day 4: Primary frontend put together, various individual refinements
+-Day 5: Front end touched up, various individual refinements
 -Day 6:
 -Day 7:
 - Presentation on Day 8

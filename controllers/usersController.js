@@ -5,9 +5,10 @@ const session = require('express-session');
 const Users = require('../models/users.js');
 
 //GET USER ROUTE
-router.get('/', (req, res)=>{
-  Users.findById({}, (err, foundUsers)=>{
-    res.json(foundUsers);
+router.get('/:id', (req, res)=>{
+  Users.findById(req.params.id, (err, foundUser)=>{
+    console.log(foundUser);
+    res.json(foundUser);
   });
 });
 

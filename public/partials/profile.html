@@ -4,12 +4,12 @@
         <br>
 
         <ul>
-            <li ng-repeat="movie in ctrl.loggedInUser.moviesLiked">
+            <li ng-repeat="movie in ctrl.updatedUser.moviesLiked">
             <img ng-click="ctrl.getInfo(movie.imdbID)" ng-src={{movie.Poster}} ng-click="main.getInfo(movie.title)" class="animated tada"/>
             </li>
         </ul>
 
     </div>
     <hr>
-    
+
 </div>
