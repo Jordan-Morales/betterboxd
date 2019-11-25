@@ -37,7 +37,7 @@
 <section class="section">
   <h3> Comments:</h3>
 
-   <button class="button is-medium" ng-if="!ctrl.commentForm" ng-click="ctrl.commentForm = true">new comment</button>
+   <button class="button is-medium" ng-if="!ctrl.commentForm && ctrl.loggedInUser" ng-click="ctrl.commentForm = true">new comment</button>
 
    <div ng-if="ctrl.commentForm">
      <form
