@@ -54,6 +54,8 @@ app.controller('MainController', ['$http', function($http){
 
   this.checkArray=[]
 
+  this.updatedUser={}
+
   // ======= API CALLS ====================
 
   // --- Users+Session Datapoint
@@ -74,11 +76,32 @@ app.controller('MainController', ['$http', function($http){
       controller.openTopMovies = true
       controller.profileOn = true
       controller.showMovieList = false
+      // console.log(controller.loggedInUser._id);
+      controller.regrabUser(controller.loggedInUser._id)
       // console.log(controller.loggedInUser)
       // console.log(controller.loggedInUser.moviesLiked)
     }, function(){
       console.log('error');
     });
+  }
+
+  this.regrabUser = (id) => {
+      $http({
+        method:'GET',
+        url: '/users/'+ id
+      }).then(function(response){
+        // console.log(response.data)
+        controller.loggedInUser = response.data
+        controller.updatedUser = response.data
+        // console.log(controller.loggedInUser);
+        // console.log(controller.updatedUser);
+        // console.log(this.updatedUser);
+        // return this.updatedUser
+        // controller.loggedInUser = response.data
+        // return controller.loggedInUser
+      }, function(){
+        console.log('error');
+      });
   }
 
   ////////////////////////////
@@ -234,7 +257,7 @@ app.controller('MainController', ['$http', function($http){
       // console.log(this.movieLikes);
       this.movieComments = response.data[0].comment
       // console.log(this.movieComments);
-      this.getLikes(this.loggedInUser, movieId)
+      this.getLikes(this.updatedUser, movieId)
     })
   }
 
@@ -327,19 +350,22 @@ app.controller('MainController', ['$http', function($http){
 
   // edit movie comment
 
-
+  /////////////////
+  // function to toggle display of filled heart
+  /////////////////
 
   this.getLikes = (user, movieId) => {
+    // console.log('get likes', user);
     if (user.moviesLiked === undefined) {
+      console.log('movie undefined');
       return;
     } else {
     this.checkArray = user.moviesLiked;
     if (this.checkArray.some(movie => movie.imdbID === movieId)){
-      // console.log('here');
-      return true
+      return 'filled'
     } else {
-      // console.log('not here')
-      return false
+      return 'toggle'
+    }
     }
   }
     // console.log('are we getting here?');
@@ -357,7 +383,7 @@ app.controller('MainController', ['$http', function($http){
     //   }
     //   return result
     //   console.log(result);
-  }
+
 
   // console.log(foundMovie);
 
@@ -374,9 +400,14 @@ app.controller('MainController', ['$http', function($http){
 
   //
   // })
-
+  /////////////////
+  // function to add likes to moviesLiked
+  /////////////////
 
   this.addLikes = (user, movieObject) => {
+    // console.log(user);
+    // this.regrabUser(user.id);
+    // console.log(this.regrabUser(user.id));
     // console.log(movieObject);
     $http({
       method:'PUT',
