@@ -19,16 +19,16 @@ this.loggedInName = null;
 /////////////////
 
 this.displayApp = (getData) => {
-    $http({
-        method:'GET',
-        url: '/sessions/'
-    }).then(function(response){
-        controller.loggedInUsername = response.data.username;
-        controller.loggedInName = response.data.name;
-        getData(response.data.username);
-    }, function(){
-        console.log('error');
-    });
+  $http({
+    method:'GET',
+    url: '/sessions/'
+  }).then(function(response){
+    controller.loggedInUsername = response.data.username;
+    controller.loggedInName = response.data.name;
+    getData(response.data.username);
+  }, function(){
+    console.log('error');
+  });
 }
 
 ////////////////////////////
@@ -37,25 +37,24 @@ this.displayApp = (getData) => {
 ////////////////////////////
 
 this.createUser = () => {
-    $http({
-        method:'POST',
-        url:'/users',
-        data: {
-            name: this.createname,
-            username: this.createusername,
-            password: this.createpassword
-        }
-    }).then(function(response){
-        console.log(response);
-        controller.createname = 'thanks, now login';
-        controller.createusername = null;
-        controller.createpassword = null;
-    }, function(error){
-        console.log(error);
-        controller.createname = 'fail';
-        controller.createusername = null;
-        controller.createpassword = null;
-    })
+  $http({
+    method:'POST',
+    url:'/users',
+    data: {
+      name: this.createname,
+      username: this.createusername,
+      password: this.createpassword
+    }
+  }).then(function(response){
+    controller.createname = 'thanks, now login';
+    controller.createusername = null;
+    controller.createpassword = null;
+  }, function(error){
+    console.log(error);
+    controller.createname = 'fail';
+    controller.createusername = null;
+    controller.createpassword = null;
+  })
 }
 
 //////////////////////
@@ -65,23 +64,22 @@ this.createUser = () => {
 //////////////////////
 
 this.logIn = (getData) => {
-$http({
+  $http({
     method:'POST',
     url:'/sessions/',
     data: {
-        username: this.username,
-        password: this.password
+      username: this.username,
+      password: this.password
     }
-}).then(function(response){
-    console.log(response);
+  }).then(function(response){
     controller.username = null;
     controller.password = null;
     controller.displayApp(getData);
-}, function(error){
+  }, function(error){
     console.log(error);
     controller.username = 'fail';
     controller.password = null;
-})
+  })
 }
 
 /////////////////////
@@ -89,15 +87,14 @@ $http({
 //Takes a function to clear all data as a parameter, so data from previous user doesnt linger
 /////////////////////
 this.logOut = (clearFunction) => {
-$http({
+  $http({
     method:'DELETE',
     url:'/sessions/'
-}).then(function(response){
-    console.log(response);
+  }).then(function(response){
     clearFunction();
-}, function(error){
+  }, function(error){
     console.log(error);
-});
+  });
 }
 
 //////////////////////
@@ -106,6 +103,6 @@ $http({
 //////////////////////
 
 this.clearData = () => {
-    this.loggedInUsername = null;
-    this.loggedInName = null;
+  this.loggedInUsername = null;
+  this.loggedInName = null;
 }
