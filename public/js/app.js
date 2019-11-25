@@ -52,6 +52,8 @@ app.controller('MainController', ['$http', function($http){
   //to toggle the new comment form in the page
   this.commentForm = false
 
+  this.checkArray=[]
+
   // ======= API CALLS ====================
 
   // --- Users+Session Datapoint
@@ -121,7 +123,7 @@ app.controller('MainController', ['$http', function($http){
         password: this.password
       }
     }).then(function(response){
-      // console.log(response);
+      // (response);
       controller.username = null;
       controller.password = null;
       this.loginToggle = false
@@ -328,18 +330,22 @@ app.controller('MainController', ['$http', function($http){
 
 
   this.getLikes = (user, movieId) => {
-    // console.log('are we getting here?');
-    // console.log(movieId);
-    // console.log(user.moviesLiked);
-    let checkArray = [];
-    checkArray = user.moviesLiked;
-    if (checkArray.some(movie => movie.imdbID === movieId)){
+    if (user.moviesLiked === undefined) {
+      return;
+    } else {
+    this.checkArray = user.moviesLiked;
+    if (this.checkArray.some(movie => movie.imdbID === movieId)){
       // console.log('here');
       return true
     } else {
       // console.log('not here')
       return false
     }
+  }
+    // console.log('are we getting here?');
+    // console.log(movieId);
+    // console.log(user.moviesLiked);
+
     //   // if movieId found in === user.moviesLiked[].imdbID
     // for (var i = 0; i < checkArray.length; i++) {
     //   if (checkArray[i].filter(checkArray[i] => (checkArray[i].omdbID === "movieId"))){
@@ -473,8 +479,8 @@ app.controller('MainController', ['$http', function($http){
   //Function to toggle display for sign up
   ///////////////////
   this.showSignUp = () => {
-    console.log(this.showNav);
-    console.log(this.loggedInUser);
+    // console.log(this.showNav);
+    // console.log(this.loggedInUser);
     this.signupSection = !this.signupSection;
     this.showMovieList = !this.showMovieList
     this.openTopMovies = false
