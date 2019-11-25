@@ -52,7 +52,11 @@ app.controller('MainController', ['$http', function($http){
   //to toggle the new comment form in the page
   this.commentForm = false
 
+  // for checking getLikes
   this.checkArray=[]
+
+  // Hold updatedUser
+  this.updatedUser={}
 
   // ======= API CALLS ====================
 
@@ -68,14 +72,27 @@ app.controller('MainController', ['$http', function($http){
       method:'GET',
       url: '/sessions/'
     }).then(function(response){
-      // console.log(response)
       controller.loggedInUser = response.data
       controller.topFive();
       controller.openTopMovies = true
       controller.profileOn = true
       controller.showMovieList = false
-      // console.log(controller.loggedInUser)
-      // console.log(controller.loggedInUser.moviesLiked)
+      controller.regrabUser(controller.loggedInUser._id)
+    }, function(){
+      console.log('error');
+    });
+  }
+  ////////////////////////////
+  // Uses loggedInUser to grab the user's and manipulate directly
+  ////////////////////////////
+
+  this.regrabUser = (id) => {
+    $http({
+      method:'GET',
+      url: '/users/'+ id
+    }).then(function(response){
+      controller.loggedInUser = response.data
+      controller.updatedUser = response.data
     }, function(){
       console.log('error');
     });
@@ -109,8 +126,8 @@ app.controller('MainController', ['$http', function($http){
   }
 
   //////////////////////
-  //LOGIN FUNCTION
-  //Takes the Get Function as a Parameter to make sure to populate data on logIn
+  // LOGIN FUNCTION
+  // Takes the Get Function as a Parameter to make sure to populate data on logIn
   // It passes the get function to displayapp so it can populate after establishing session
   //////////////////////
 
@@ -123,7 +140,6 @@ app.controller('MainController', ['$http', function($http){
         password: this.password
       }
     }).then(function(response){
-      // (response);
       controller.username = null;
       controller.password = null;
       this.loginToggle = false
@@ -138,15 +154,14 @@ app.controller('MainController', ['$http', function($http){
   }
 
   /////////////////////
-  //LOGOUT FUNCTION
-  //Takes a function to clear all data as a parameter, so data from previous user doesnt linger
+  // LOGOUT FUNCTION
+  // Takes a function to clear all data as a parameter, so data from previous user doesnt linger
   /////////////////////
   this.logOut = (clearFunction) => {
     $http({
       method:'DELETE',
       url:'/sessions/'
     }).then(function(response){
-      // console.log(response);
       clearFunction();
     }, function(error){
       console.log(error);
@@ -155,8 +170,8 @@ app.controller('MainController', ['$http', function($http){
   }
 
   //////////////////////
-  //Clear Data Function
-  //Clear any data upon logout or when needed
+  // Clear Data Function
+  // Clear any data upon logout or when needed
   //////////////////////
 
   this.clearData = () => {
@@ -168,10 +183,11 @@ app.controller('MainController', ['$http', function($http){
 
   }
 
-
-
+  /////////////////
   // --- OMDB API
-  //search for movies -- this.movieTitle is coming from the form ng-model in the searchbox
+  // search for movies -- this.movieTitle is coming from the form ng-model in the searchbox
+  /////////////////
+
   this.getMovies = () => {
     $http({
       method:'GET',
@@ -190,8 +206,11 @@ app.controller('MainController', ['$http', function($http){
     //erasing the input field
     this.movieTitle = ''
   }
+  /////////////////
+  // display specific movie and comments associated --
+  // getInfo function calls OMDB API for the movie details.
+  /////////////////
 
-  // display specific movie and comments associated -- getInfo function calls OMDB API for the movie details.
   this.getInfo = (movieId) => {
     //turning into false to hide the movie list after clicking
     this.showMovieList = false
@@ -201,7 +220,6 @@ app.controller('MainController', ['$http', function($http){
     }).then( response =>{
       this.movieInfo = response.data;
       this.getComment(movieId);
-      // console.log(this.movieInfo);
     }, error => {
       console.log(error);
     })
@@ -209,6 +227,10 @@ app.controller('MainController', ['$http', function($http){
     this.showMovieInfo = true;
     this.commentForm = false
   }
+  /////////////////
+  // function to make sure the first time a
+  // movie is viewed it's dropped into our database
+  /////////////////
 
   this.firstView = (movieId) => {
     $http({
@@ -218,34 +240,34 @@ app.controller('MainController', ['$http', function($http){
         omdbID: movieId
       }
     }).then( response => {
-      // console.log(movieId);
     }, error => {
       console.log(error);
     })
   }
+  /////////////////
+  // function to pull comments from movie
+  /////////////////
 
   this.getComment = (movieId) => {
     $http({
       method:'GET',
       url:'/moviesapi/'+movieId
     }).then( response => {
-      // console.log(response.data[0])
       this.movieLikes = response.data[0].likes || 0
-      // console.log(this.movieLikes);
       this.movieComments = response.data[0].comment
-      // console.log(this.movieComments);
-      this.getLikes(this.loggedInUser, movieId)
+      this.getLikes(this.updatedUser, movieId)
     })
   }
+  /////////////////
+  // function to create a new comment
+  /////////////////
 
   this.newComment = (movieId) => {
-    // console.log(movieId);
     this.newComments = {
       username:this.loggedInUser.username,
       date: Date.now(),
       message:this.newMessage
     }
-    // console.log(this.movieComments);
     $http({
       method: 'PUT',
       url:'/moviesapi/' + movieId + '/newcomment',
@@ -261,12 +283,13 @@ app.controller('MainController', ['$http', function($http){
     this.commentForm = false
   }
 
+  /////////////////
+  // function to delete own comments
+  /////////////////
+
   this.deleteComment = (movieId, index) => {
-    // console.log(movieId);
-    // console.log(index);
     this.updatedComments = this.movieComments;
     this.updatedComments.splice(index, 1);
-    // console.log(this.movieComments);
     $http({
       method: 'PUT',
       url:'/moviesapi/'+movieId + '/deletecomment',
@@ -274,13 +297,13 @@ app.controller('MainController', ['$http', function($http){
         comment: this.updatedComments
       }
     }).then((response) => {
-      // this.getComment(movieId);
     })
   }
+  /////////////////
+  // function to own edit comments
+  /////////////////
 
   this.editComment = (movieId, index) => {
-    // console.log(movieId);
-    // console.log(index);
     this.updatedComments = this.movieComments;
     this.editedComment = {
       username:this.loggedInUser.username,
@@ -288,7 +311,6 @@ app.controller('MainController', ['$http', function($http){
       message:this.updatedMessage
     }
     this.updatedComments.splice(index, 1, this.editedComment);
-    // console.log(this.movieComments);
     $http({
       method: 'PUT',
       url:'/moviesapi/'+movieId + '/editcomment',
@@ -302,82 +324,29 @@ app.controller('MainController', ['$http', function($http){
     })
   }
 
-  // like movie / unlike movies
-
-  // add movie comment
-  // this.addComment = () => {
-  //   $http({
-  //     method:'POST',
-  //     url:'/moviesapi/'+movieId,
-  //     data: {
-  //       comment:
-  //     }
-  //   }).then((response) => {
-  //     console.log(response.data);
-  //   }, (error) => {
-  //     $http({
-  //       method:'PUT',
-  //       url:'/moviesapi/'+movieId
-  //     }).then((response) => {
-  //       console.log(response.data);
-  //     })
-  //   })
-  // }
-  // delete movie comment
-
-  // edit movie comment
-
-
+  /////////////////
+  // function to toggle display of filled heart
+  /////////////////
 
   this.getLikes = (user, movieId) => {
     if (user.moviesLiked === undefined) {
+      console.log('movie undefined');
       return;
     } else {
-    this.checkArray = user.moviesLiked;
-    if (this.checkArray.some(movie => movie.imdbID === movieId)){
-      // console.log('here');
-      return true
-    } else {
-      // console.log('not here')
-      return false
+      this.checkArray = user.moviesLiked;
+      if (this.checkArray.some(movie => movie.imdbID === movieId)){
+        return 'filled'
+      } else {
+        return 'toggle'
+      }
     }
   }
-    // console.log('are we getting here?');
-    // console.log(movieId);
-    // console.log(user.moviesLiked);
 
-    //   // if movieId found in === user.moviesLiked[].imdbID
-    // for (var i = 0; i < checkArray.length; i++) {
-    //   if (checkArray[i].filter(checkArray[i] => (checkArray[i].omdbID === "movieId"))){
-    //     result = true;
-    //     console.log('true');
-    //   } else {
-    //     result = false;
-    //     console.log('false');
-    //   }
-    //   return result
-    //   console.log(result);
-  }
-
-  // console.log(foundMovie);
-
-
-  // if (movieId === foundMovie) {
-  // }
-
-  //     // then do:
-  //   //else do:
-  // $http({
-  //   method:'GET',
-  //   url:'/moviesapi/'+ user._id + '/' + movieId,
-  // }).then( response => {
-
-  //
-  // })
-
+  /////////////////
+  // function to add likes to moviesLiked
+  /////////////////
 
   this.addLikes = (user, movieObject) => {
-    // console.log(movieObject);
     $http({
       method:'PUT',
       url:'/users/'+ user._id + '/' + movieObject.imdbID,
@@ -385,7 +354,6 @@ app.controller('MainController', ['$http', function($http){
         movie: movieObject
       }
     }).then( response => {
-      // console.log(response);
       this.getInfo(movieObject.imdbID)
     })
   }
@@ -394,13 +362,7 @@ app.controller('MainController', ['$http', function($http){
   /////////////////
 
   this.showProfile = () => {
-
-    // console.log(controller.profileOn);
-    // console.log('toggle');
     controller.profileOn = !controller.profileOn;
-    // console.log(controller.profileOn);
-    // console.log(controller.loggedInUser.moviesLiked)
-
   }
   /////////////////
   //function to build array of top movies
@@ -411,42 +373,27 @@ app.controller('MainController', ['$http', function($http){
       method:'GET',
       url: '/moviesapi/'
     }).then( response =>{
-      // console.log('the response is next')
-      // console.log(response)
       let movieList = response.data;
       this.topMovies = [];
       while (this.topMovies.length < 5){
-        // console.log('while begins');
         let topLikes = 0;
         let topMovie = {};
         let topMovieIndex;
-        // console.log(movieList);
         for (movie in movieList){
-          // console.log('for begins');
-          // console.log(movie);
-          // console.log(movieList[movie]);
           let currentLikes = movieList[movie].likes;
           if (currentLikes > topLikes){
             topLikes = currentLikes;
-            // console.log('the current movie is ' + movieList[movie])
             topMovie = movieList[movie];
             topMovieIndex = movie;
           }
         }
-        // console.log('the winning movie is' + topMovie.omdbID)
         this.topMovies.push(topMovie);
         movieList[topMovieIndex].likes=0;
-        // console.log(this.topMovies)
-
       }
-      // console.log(this.topMovies)
       this.getTopMovieInfo();
-
     }, error => {
       console.log(error);
     })
-
-    //erasing the input field
     this.movieTitle = ''
   }
 
@@ -455,7 +402,6 @@ app.controller('MainController', ['$http', function($http){
   //Function to reset the booleans when clicking "home"
   ///////////////////
   this.homePage = () => {
-    // console.log('toggle');
     this.openTopMovies = true
     this.profileOn = true
     this.showNav = false
@@ -463,7 +409,6 @@ app.controller('MainController', ['$http', function($http){
     this.signupSection = false
     this.showSearch = false
     this.showMovieInfo = false
-
   }
 
 
@@ -471,7 +416,6 @@ app.controller('MainController', ['$http', function($http){
   //Function to toggle display the hot movies
   ///////////////////
   this.showTopMovies = () => {
-    // console.log('toggle');
     this.openTopMovies = !this.openTopMovies;
   }
 
@@ -479,12 +423,9 @@ app.controller('MainController', ['$http', function($http){
   //Function to toggle display for sign up
   ///////////////////
   this.showSignUp = () => {
-    // console.log(this.showNav);
-    // console.log(this.loggedInUser);
     this.signupSection = !this.signupSection;
     this.showMovieList = !this.showMovieList
     this.openTopMovies = false
-
   }
 
   ////////////////////////
@@ -494,28 +435,23 @@ app.controller('MainController', ['$http', function($http){
   this.getTopMovieInfo = async (movieId) => {
     //turning into false to hide the movie list after clicking
     for (i=0;i<this.topMovies.length;i++){
-      // console.log(this.topMovies[i].omdbID);
-      // console.log(i);
       response = await $http({
         method:'GET',
         url: 'https://www.omdbapi.com/?apikey=53aa2cd6&i='+this.topMovies[i].omdbID });
         this.topMovieDetails[i] =  await response.data;
-        // console.log(this.topMovieDetails);
-      }}
+    }
+  }
 
-      /////////////////
-      //Function to toggle movies on mobile
-      /////////////////
-      this.showMenu = () => {
+  /////////////////
+  //Function to toggle movies on mobile
+  /////////////////
+  this.showMenu = () => {
 
-        topMenu = document.getElementById('menu');
-        if (menu.style.display == 'none'){
-          menu.style.display = 'block';
-        } else {
-          menu.style.display = 'none';
-        }
-
-      }
-
-
-    }])
+    topMenu = document.getElementById('menu');
+    if (menu.style.display == 'none'){
+      menu.style.display = 'block';
+    } else {
+      menu.style.display = 'none';
+    }
+  }
+}])

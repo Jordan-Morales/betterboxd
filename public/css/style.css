@@ -109,6 +109,11 @@ button:hover, input[type="submit"]:hover {background-color: var(--lightBlue); co
 
 
 
+img {
+  box-shadow: 4px 4px grey;
+}
+
+
 
 
 /* ----------------------- */
