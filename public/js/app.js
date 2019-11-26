@@ -343,18 +343,20 @@ app.controller('MainController', ['$http', function($http){
     let finalCheck = localUser.moviesLiked;
     console.log('final check', finalCheck);
     // when it gets here it still thinks the item it in the array even if it's not... :thinking:
+    console.log((finalCheck.some(movie => movie.imdbID === movieId)))
     if (user.moviesLiked === undefined) {
       console.log('movie undefined');
     } else if (finalCheck.some(movie => movie.imdbID === movieId)) {
         console.log(movie);
-        console.log('filled');
-        heart.removeClass("empty");
-        heart.addClass("filled");
-      } else {
-        console.log(movie);
         console.log('empty');
         heart.addClass("empty");
         heart.removeClass("filled")
+      } else {
+        console.log(movie);
+
+        console.log('filled');
+        heart.removeClass("empty");
+        heart.addClass("filled");
       }
   }
 
