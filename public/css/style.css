@@ -136,8 +136,7 @@ a{
   background-image: url(https://res.cloudinary.com/hnt3etgxo/image/upload/v1574461274/iconfinder_heart_298792_r3wwqm.svg);
 }
 .filled {
-  filter: invert(13%) sepia(88%) saturate(3960%) hue-rotate(355deg)
-    brightness(100%) contrast(86%);
+  filter: invert(13%) sepia(88%) saturate(3960%) hue-rotate(355deg) brightness(100%) contrast(86%);
 }
 .empty{
   filter: none;
