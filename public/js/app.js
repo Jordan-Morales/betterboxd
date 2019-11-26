@@ -92,8 +92,12 @@ app.controller('MainController', ['$http', function($http){
       method:'GET',
       url: '/users/'+ id
     }).then(function(response){
-      controller.loggedInUser = response.data
-      controller.updatedUser = response.data
+      console.log('regrab user ------------')
+      console.log(response.data)
+      controller.loggedInUser = response.data;
+      console.log(controller.loggedInUser)
+      console.log('regrab user end ------------')
+      // controller.updatedUser = response.data
     }, function(){
       console.log('error');
     });
@@ -214,8 +218,8 @@ app.controller('MainController', ['$http', function($http){
 
   this.getInfo = (movieId) => {
     //turning into false to hide the movie list after clicking
-    let heart = angular.element(document.querySelectorAll('#heart'));
-    heart.removeClass('filled');
+    // let heart = angular.element(document.querySelectorAll('#heart'));
+    // heart.removeClass('filled');
     this.showMovieList = false
     $http({
       method:'GET',
@@ -223,7 +227,8 @@ app.controller('MainController', ['$http', function($http){
     }).then( response =>{
       this.movieInfo = response.data;
       this.getComment(movieId);
-      this.isLiked(controller.updatedUser, movieId)
+      console.log(controller.loggedInUser.moviesLiked)
+      this.isLiked(controller.loggedInUser, movieId)
     }, error => {
       console.log(error);
     })
@@ -260,7 +265,6 @@ app.controller('MainController', ['$http', function($http){
       this.movieLikes = response.data[0].likes || 0
       this.movieComments = response.data[0].comment
       // console.log('get like in comments');
-      this.getLikes(controller.updatedUser, movieId)
     })
   }
   /////////////////
@@ -353,7 +357,7 @@ app.controller('MainController', ['$http', function($http){
   /////////////////
 
   this.getLikes = (user, movieId) => {
-    this.regrabUser(controller.updatedUser._id);
+    this.regrabUser(controller.loggedInUser._id);
     let localUser = controller.updatedUser
     let finalCheck = localUser.moviesLiked;
     if (finalCheck.some(movie => movie.imdbID === movieId)) {
@@ -373,24 +377,27 @@ app.controller('MainController', ['$http', function($http){
   // function to verify and correct likes
   /////////////////
   this.isLiked = (user, movieId) => {
-    this.regrabUser(controller.updatedUser._id);
-    let localUser = controller.updatedUser
-    let finalCheck = localUser.moviesLiked;
-    if (finalCheck.find(movie => movie.imdbID === movieId)) {
-        let heart = angular.element(document.querySelectorAll('#heart'));
-        heart.addClass("filled");
-        this.heartFilled = true;
+    console.log(user._id)
+    this.regrabUser(user._id);
+    console.log(this.loggedInUser.moviesLiked)
+    if (this.loggedInUser.moviesLiked.some(movie => movie.imdbID === movieId)) {
+        // let heart = angular.element(document.querySelectorAll('#heart'));
+        // heart.addClass("filled");
+        console.log('is liked')
+        controller.heartFilled = false;
+
+
       } else {
-        this.heartFilled = false;
-        let heart = angular.element(document.querySelectorAll('#heart'));
-        heart.addClass("empty");
+        console.log('isnt liked')
+        controller.heartFilled = true;
+        // let heart = angular.element(document.querySelectorAll('#heart'));
+        // heart.addClass("empty");
       }
   }
   /////////////////
   // function to add likes to moviesLiked
   /////////////////
   this.addLikes = (user, movieObject) => {
-    let heart = angular.element(document.querySelectorAll('#heart'));
     let movieId = movieObject.imdbID
     $http({
       method:'PUT',
@@ -399,8 +406,9 @@ app.controller('MainController', ['$http', function($http){
         movie: movieObject
       }
     }).then( response => {
-      this.getInfo(movieObject.imdbID)
-      this.isLiked(controller.updatedUser, movieId)
+      console.log('movie added')
+      console.log(response)
+      this.getInfo(movieObject.imdbID);
       })
     }
     /////////////////
@@ -415,8 +423,9 @@ app.controller('MainController', ['$http', function($http){
         movie: movieObject
       }
     }).then( response => {
-      this.getInfo(movieObject.imdbID)
-      this.isLiked(controller.updatedUser, movieId)
+      console.log('movie removed')
+      console.log(response)
+      this.getInfo(movieObject.imdbID);
       })
   }
   /////////////////
