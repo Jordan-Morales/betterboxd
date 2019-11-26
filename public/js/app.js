@@ -222,6 +222,7 @@ app.controller('MainController', ['$http', function($http){
     }).then( response =>{
       this.movieInfo = response.data;
       this.getComment(movieId);
+      this.isLiked(controller.updatedUser, movieId)
     }, error => {
       console.log(error);
     })
@@ -367,15 +368,35 @@ app.controller('MainController', ['$http', function($http){
         console.log('empty');
         heart.addClass("empty");
         heart.removeClass("filled")
+        console.log('this is removing ');
+        // return false
       } else {
         console.log(movie);
-
         console.log('filled');
         heart.removeClass("empty");
         heart.addClass("filled");
+        console.log('this is adding');
+        // return true
       }
   }
 
+
+  this.isLiked = (user, movieId) => {
+    this.regrabUser(controller.updatedUser._id);
+
+    let localUser = controller.updatedUser
+    let finalCheck = localUser.moviesLiked;
+
+    if (user.moviesLiked === undefined) {
+      console.log('movie undefined');
+    } else if (finalCheck.find(movie => movie.imdbID === movieId)) {
+        console.log(true);
+        // return false
+      } else {
+        console.log(false);
+        // return true
+      }
+  }
   /////////////////
   // function to add likes to moviesLiked
   /////////////////
