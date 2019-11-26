@@ -43,12 +43,16 @@ router.put('/:userID/:movieID', (req, res)=>{
   Users.findById(req.params.userID, (err, updatedUser)=>{
     likeArray = updatedUser.moviesLiked
     if (likeArray.some(movie => movie.imdbID === req.params.movieID)){
+      console.log('routing to declikes');
+      // res.redirect('/moviesapi/'+ req.params.movieID + '/declikes/');
       Users.findOneAndUpdate({_id:req.params.userID}, {$pull:{moviesLiked:req.body.movie}}, {new:true}, (error, updatedUser) => {
         console.log('pulling from array');
         res.redirect('/moviesapi/'+ req.params.movieID + '/declikes/');
       })
 
     }else{
+      // console.log('routing to addlikes');
+      // res.redirect('/moviesapi/'+ req.params.movieID + '/addlikes/');
       Users.findOneAndUpdate({_id:req.params.userID}, {$push:{moviesLiked:req.body.movie}}, {new:true}, (error, updatedUser) => {
         console.log('putting in array');
         res.redirect('/moviesapi/'+ req.params.movieID + '/addlikes/');

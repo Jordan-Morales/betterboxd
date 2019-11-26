@@ -257,9 +257,7 @@ app.controller('MainController', ['$http', function($http){
     }).then( response => {
       this.movieLikes = response.data[0].likes || 0
       this.movieComments = response.data[0].comment
-      console.log('about to grab the user');
       console.log('get like in comments');
-      this.regrabUser(controller.updatedUser._id);
       this.getLikes(controller.updatedUser, movieId)
     })
   }
@@ -333,10 +331,16 @@ app.controller('MainController', ['$http', function($http){
   // function to toggle display of filled heart
   /////////////////
 
-  this.getLikes = (user, movieId) => {
+  this.getLikes = async (user, movieId) => {
+    console.log('about to grab the user');
+    await this.regrabUser(controller.updatedUser._id);
+    console.log('reassigning user?');
+    let localUser = controller.updatedUser
+    console.log('this is the localUser, should be renewed');
+    console.log(localUser);
     console.log('getting likes');
     let heart = angular.element(document.querySelectorAll('#heart'));
-    let finalCheck = controller.updatedUser.moviesLiked;
+    let finalCheck = localUser.moviesLiked;
     console.log('final check', finalCheck);
     // when it gets here it still thinks the item it in the array even if it's not... :thinking:
     if (user.moviesLiked === undefined) {
@@ -344,11 +348,13 @@ app.controller('MainController', ['$http', function($http){
     } else if (finalCheck.some(movie => movie.imdbID === movieId)) {
         console.log(movie);
         console.log('filled');
+        heart.removeClass("empty");
         heart.addClass("filled");
       } else {
         console.log(movie);
         console.log('empty');
         heart.addClass("empty");
+        heart.removeClass("filled")
       }
   }
 
@@ -356,8 +362,11 @@ app.controller('MainController', ['$http', function($http){
   // function to add likes to moviesLiked
   /////////////////
   this.addLikes = (user, movieObject) => {
+    console.log('beginging of add', user);
     let heart = angular.element(document.querySelectorAll('#heart'));
     let movieId = movieObject.imdbID
+    // console.log('pushing the movie in');
+    // user.moviesLiked.push(movieObject);
     $http({
       method:'PUT',
       url:'/users/'+ user._id + '/' + movieObject.imdbID,
@@ -365,17 +374,21 @@ app.controller('MainController', ['$http', function($http){
         movie: movieObject
       }
     }).then( response => {
-      this.getInfo(movieObject.imdbID)
+      console.log('push to array?');
       console.log('add class');
-
+      this.getInfo(movieObject.imdbID)
       // console.log(movie);
       // console.log(movieId);
       // heart.addClass("filled");
       })
     }
   this.decLikes = (user, movieObject) => {
+    console.log('beginging of dec', user);
     let heart = angular.element(document.querySelectorAll('#heart'));
-    let movieId = movieObject.imdbID
+    let movieId = movieObject.imdbID;
+    // let n = user.moviesLiked.indexOf(movieObject);
+    // console.log('pulling the movie out');
+    // user.moviesLiked.splice(n, 1);
     $http({
       method:'PUT',
       url:'/users/'+ user._id + '/' + movieObject.imdbID,
@@ -383,8 +396,10 @@ app.controller('MainController', ['$http', function($http){
         movie: movieObject
       }
     }).then( response => {
-      this.getInfo(movieObject.imdbID)
+      console.log('pull from array');
+
       console.log('remove class');
+      this.getInfo(movieObject.imdbID)
       // heart.removeClass("filled");
 
       })
