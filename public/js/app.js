@@ -221,6 +221,8 @@ app.controller('MainController', ['$http', function($http){
     // let heart = angular.element(document.querySelectorAll('#heart'));
     // heart.removeClass('filled');
     this.showMovieList = false
+    this.heartFilled=false
+    this.regrabUser(controller.loggedInUser._id);
     $http({
       method:'GET',
       url: 'https://www.omdbapi.com/?apikey=53aa2cd6&i='+movieId
@@ -378,22 +380,24 @@ app.controller('MainController', ['$http', function($http){
   /////////////////
   this.isLiked = (user, movieId) => {
     console.log(user._id)
-    this.regrabUser(user._id);
     console.log(this.loggedInUser.moviesLiked)
     if (this.loggedInUser.moviesLiked.some(movie => movie.imdbID === movieId)) {
         // let heart = angular.element(document.querySelectorAll('#heart'));
         // heart.addClass("filled");
-        console.log('is liked')
         controller.heartFilled = false;
+        console.log('is liked')
+
 
 
       } else {
         console.log('isnt liked')
+
         controller.heartFilled = true;
         // let heart = angular.element(document.querySelectorAll('#heart'));
         // heart.addClass("empty");
       }
   }
+
   /////////////////
   // function to add likes to moviesLiked
   /////////////////
