@@ -258,7 +258,7 @@ app.controller('MainController', ['$http', function($http){
       this.movieLikes = response.data[0].likes || 0
       this.movieComments = response.data[0].comment
       console.log('get like in comments');
-      this.getLikes(controller.updatedUser, movieId)
+      // this.getLikes(controller.updatedUser, movieId)
     })
   }
   /////////////////
@@ -330,10 +330,26 @@ app.controller('MainController', ['$http', function($http){
   /////////////////
   // function to toggle display of filled heart
   /////////////////
+  // this.ngLikes =
+  // if (user.moviesLiked === undefined) {
+  //   console.log('movie undefined');
+  // } else if (finalCheck.find(movie => movie.imdbID === movieId)) {
+  //     console.log(movie);
+  //     console.log('empty');
+  //     heart.addClass("empty");
+  //     heart.removeClass("filled")
+  //   } else {
+  //     console.log(movie);
+  //
+  //     console.log('filled');
+  //     heart.removeClass("empty");
+  //     heart.addClass("filled");
+  //   }
+  // }
 
-  this.getLikes = async (user, movieId) => {
+  this.getLikes = (user, movieId) => {
     console.log('about to grab the user');
-    await this.regrabUser(controller.updatedUser._id);
+    this.regrabUser(controller.updatedUser._id);
     console.log('reassigning user?');
     let localUser = controller.updatedUser
     console.log('this is the localUser, should be renewed');
@@ -346,7 +362,7 @@ app.controller('MainController', ['$http', function($http){
     console.log((finalCheck.some(movie => movie.imdbID === movieId)))
     if (user.moviesLiked === undefined) {
       console.log('movie undefined');
-    } else if (finalCheck.some(movie => movie.imdbID === movieId)) {
+    } else if (finalCheck.find(movie => movie.imdbID === movieId)) {
         console.log(movie);
         console.log('empty');
         heart.addClass("empty");
@@ -379,6 +395,7 @@ app.controller('MainController', ['$http', function($http){
       console.log('push to array?');
       console.log('add class');
       this.getInfo(movieObject.imdbID)
+      this.getLikes(controller.updatedUser, movieId)
       // console.log(movie);
       // console.log(movieId);
       // heart.addClass("filled");
@@ -399,9 +416,9 @@ app.controller('MainController', ['$http', function($http){
       }
     }).then( response => {
       console.log('pull from array');
-
       console.log('remove class');
       this.getInfo(movieObject.imdbID)
+      this.getLikes(controller.updatedUser, movieId)
       // heart.removeClass("filled");
 
       })
