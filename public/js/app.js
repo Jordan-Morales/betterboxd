@@ -257,7 +257,10 @@ app.controller('MainController', ['$http', function($http){
     }).then( response => {
       this.movieLikes = response.data[0].likes || 0
       this.movieComments = response.data[0].comment
-      this.getLikes(this.updatedUser, movieId)
+      console.log('about to grab the user');
+      console.log('get like in comments');
+      this.regrabUser(controller.updatedUser._id);
+      this.getLikes(controller.updatedUser, movieId)
     })
   }
   /////////////////
@@ -331,17 +334,22 @@ app.controller('MainController', ['$http', function($http){
   /////////////////
 
   this.getLikes = (user, movieId) => {
+    console.log('getting likes');
+    let heart = angular.element(document.querySelectorAll('#heart'));
+    let finalCheck = controller.updatedUser.moviesLiked;
+    console.log('final check', finalCheck);
+    // when it gets here it still thinks the item it in the array even if it's not... :thinking:
     if (user.moviesLiked === undefined) {
-      // console.log('movie undefined');
-      return;
-    } else {
-      this.checkArray = user.moviesLiked;
-      if (this.checkArray.some(movie => movie.imdbID === movieId)){
-        return 'filled'
+      console.log('movie undefined');
+    } else if (finalCheck.some(movie => movie.imdbID === movieId)) {
+        console.log(movie);
+        console.log('filled');
+        heart.addClass("filled");
       } else {
-        return 'toggle'
+        console.log(movie);
+        console.log('empty');
+        heart.addClass("empty");
       }
-    }
   }
 
   /////////////////
@@ -358,10 +366,11 @@ app.controller('MainController', ['$http', function($http){
       }
     }).then( response => {
       this.getInfo(movieObject.imdbID)
-      console.log('why no add class');
-      console.log(movie);
-      console.log(movieId);
-      heart.addClass('filled');
+      console.log('add class');
+
+      // console.log(movie);
+      // console.log(movieId);
+      // heart.addClass("filled");
       })
     }
   this.decLikes = (user, movieObject) => {
@@ -375,8 +384,9 @@ app.controller('MainController', ['$http', function($http){
       }
     }).then( response => {
       this.getInfo(movieObject.imdbID)
-      console.log('why no remove class');
-      heart.removeClass('filled');
+      console.log('remove class');
+      // heart.removeClass("filled");
+
       })
   }
   this.toggleLikes = (user, movieObject) => {
@@ -388,13 +398,17 @@ app.controller('MainController', ['$http', function($http){
       return;
     } else {
       let checkArray = user.moviesLiked;
-      console.log(this.checkArray);
-      console.log(this.checkArray.some(movie => movie.omdbID === movieId));
+      console.log(checkArray);
+      console.log(checkArray.some(movie => movie.imdbID === movieId));
 
       if (checkArray.some(movie => movie.imdbID === movieId)){
+        checkArray = [];
+        console.log('decrease likes route');
         this.decLikes(user, movieObject)
         }
         else {
+          checkArray = [];
+          console.log('add likes route');
           this.addLikes(user, movieObject)
 
       }
