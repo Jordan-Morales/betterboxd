@@ -348,48 +348,39 @@ app.controller('MainController', ['$http', function($http){
   //     heart.addClass("filled");
   //   }
   // }
+  /////////////////
+  // function to get intial likes
+  /////////////////
 
   this.getLikes = (user, movieId) => {
-    console.log('about to grab the user');
     this.regrabUser(controller.updatedUser._id);
     let localUser = controller.updatedUser
-    console.log('getting likes');
     let finalCheck = localUser.moviesLiked;
-    console.log('final check', finalCheck);
-    // when it gets here it still thinks the item it in the array even if it's not... :thinking:
-    console.log((finalCheck.some(movie => movie.imdbID === movieId)))
     if (finalCheck.some(movie => movie.imdbID === movieId)) {
-      console.log(movie);
-      console.log('filled');
       let heart = angular.element(document.querySelectorAll('#heart'));
       heart.removeClass("empty");
       heart.addClass("filled");
-      console.log('this is adding');
       // return true
-
-      } else {
-        console.log(movie);
-        console.log('empty');
-        let heart = angular.element(document.querySelectorAll('#heart'));
-        heart.addClass("empty");
-        heart.removeClass("filled")
-        console.log('this is removing ');
+    } else {
+      let heart = angular.element(document.querySelectorAll('#heart'));
+      heart.addClass("empty");
+      heart.removeClass("filled")
         // return false
       }
   }
 
-
+  /////////////////
+  // function to verify and correct likes
+  /////////////////
   this.isLiked = (user, movieId) => {
     this.regrabUser(controller.updatedUser._id);
     let localUser = controller.updatedUser
     let finalCheck = localUser.moviesLiked;
     if (finalCheck.find(movie => movie.imdbID === movieId)) {
-        console.log(true);
         let heart = angular.element(document.querySelectorAll('#heart'));
         heart.addClass("filled");
         this.heartFilled = true;
       } else {
-        console.log(false);
         this.heartFilled = false;
         let heart = angular.element(document.querySelectorAll('#heart'));
         heart.addClass("empty");
@@ -399,11 +390,8 @@ app.controller('MainController', ['$http', function($http){
   // function to add likes to moviesLiked
   /////////////////
   this.addLikes = (user, movieObject) => {
-    console.log('beginging of add', user);
     let heart = angular.element(document.querySelectorAll('#heart'));
     let movieId = movieObject.imdbID
-    // console.log('pushing the movie in');
-    // user.moviesLiked.push(movieObject);
     $http({
       method:'PUT',
       url:'/users/'+ user._id + '/' + movieObject.imdbID,
@@ -411,23 +399,15 @@ app.controller('MainController', ['$http', function($http){
         movie: movieObject
       }
     }).then( response => {
-      console.log('push to array?');
-      console.log('add class');
       this.getInfo(movieObject.imdbID)
       this.isLiked(controller.updatedUser, movieId)
-      // this.getLikes(controller.updatedUser, movieId)
-      // console.log(movie);
-      // console.log(movieId);
-      // heart.addClass("filled");
       })
     }
+    /////////////////
+    // function to remove likes to moviesLiked
+    /////////////////
   this.decLikes = (user, movieObject) => {
-    console.log('beginging of dec', user);
-    // let heart = angular.element(document.querySelectorAll('#heart'));
     let movieId = movieObject.imdbID;
-    // let n = user.moviesLiked.indexOf(movieObject);
-    // console.log('pulling the movie out');
-    // user.moviesLiked.splice(n, 1);
     $http({
       method:'PUT',
       url:'/users/'+ user._id + '/' + movieObject.imdbID,
@@ -435,36 +415,27 @@ app.controller('MainController', ['$http', function($http){
         movie: movieObject
       }
     }).then( response => {
-      console.log('pull from array');
-      // console.log('remove class');
       this.getInfo(movieObject.imdbID)
       this.isLiked(controller.updatedUser, movieId)
-      // heart.removeClass("filled");
-
       })
   }
+  /////////////////
+  // function to choose the path
+  /////////////////
   this.toggleLikes = (user, movieObject) => {
-    console.log(movieObject);
     let movieId = movieObject.imdbID
-    console.log(movieId);
     if (user.moviesLiked === undefined) {
       console.log('movie undefined');
       return;
     } else {
       let checkArray = user.moviesLiked;
-      console.log(checkArray);
-      console.log(checkArray.some(movie => movie.imdbID === movieId));
-
       if (checkArray.some(movie => movie.imdbID === movieId)){
         checkArray = [];
-        console.log('decrease likes route');
         this.decLikes(user, movieObject)
         }
         else {
           checkArray = [];
-          console.log('add likes route');
           this.addLikes(user, movieObject)
-
       }
     }
   }
