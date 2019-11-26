@@ -22,7 +22,7 @@
 
         <h5> Likes: {{ctrl.movieLikes}}</h5>
 
-        <div mg-model="ctrl.heartFilled">
+        <div ng-if="ctrl.loggedInUser" ng-model="ctrl.heartFilled">
           <div
             class="icon icon-heart filled"
             id="heart"
