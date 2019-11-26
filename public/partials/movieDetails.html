@@ -22,18 +22,20 @@
 
         <h5> Likes: {{ctrl.movieLikes}}</h5>
 
-        <div
-          class="icon icon-heart filled"
-          id="heart"
-          ng-if="ctrl.heartFilled"
-          ng-click="ctrl.toggleLikes(ctrl.updatedUser, ctrl.movieInfo);">
-         </div>
-         <div
-           class="icon icon-heart"
-           id="heart"
-           ng-if="!ctrl.heartFilled"
-           ng-click="ctrl.toggleLikes(ctrl.updatedUser, ctrl.movieInfo);">
+        <div mg-model="ctrl.heartFilled">
+          <div
+            class="icon icon-heart filled"
+            id="heart"
+            ng-if="ctrl.heartFilled"
+            ng-click="ctrl.toggleLikes(ctrl.updatedUser, ctrl.movieInfo);">
           </div>
+          <div
+             class="icon icon-heart"
+             id="heart"
+             ng-if="!ctrl.heartFilled"
+             ng-click="ctrl.toggleLikes(ctrl.updatedUser, ctrl.movieInfo);">
+          </div>
+        </div>
       </div>
     </div>
   </div>
