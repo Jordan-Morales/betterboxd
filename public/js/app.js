@@ -58,6 +58,7 @@ app.controller('MainController', ['$http', function($http){
   // Hold updatedUser
   this.updatedUser={}
 
+  this.heartFilled=false
   // ======= API CALLS ====================
 
   // --- Users+Session Datapoint
@@ -391,10 +392,10 @@ app.controller('MainController', ['$http', function($http){
       console.log('movie undefined');
     } else if (finalCheck.find(movie => movie.imdbID === movieId)) {
         console.log(true);
-        // return false
+        this.heartFilled = true;
       } else {
         console.log(false);
-        // return true
+        this.heartFilled = false;
       }
   }
   /////////////////
