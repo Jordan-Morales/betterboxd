@@ -58,6 +58,7 @@ app.controller('MainController', ['$http', function($http){
   // Hold updatedUser
   this.updatedUser={}
 
+  this.heartFilled=false
   // ======= API CALLS ====================
 
   // --- Users+Session Datapoint
@@ -213,6 +214,8 @@ app.controller('MainController', ['$http', function($http){
 
   this.getInfo = (movieId) => {
     //turning into false to hide the movie list after clicking
+    let heart = angular.element(document.querySelectorAll('#heart'));
+    heart.removeClass('filled');
     this.showMovieList = false
     $http({
       method:'GET',
@@ -220,6 +223,7 @@ app.controller('MainController', ['$http', function($http){
     }).then( response =>{
       this.movieInfo = response.data;
       this.getComment(movieId);
+      this.isLiked(controller.updatedUser, movieId)
     }, error => {
       console.log(error);
     })
@@ -255,7 +259,8 @@ app.controller('MainController', ['$http', function($http){
     }).then( response => {
       this.movieLikes = response.data[0].likes || 0
       this.movieComments = response.data[0].comment
-      this.getLikes(this.updatedUser, movieId)
+      // console.log('get like in comments');
+      this.getLikes(controller.updatedUser, movieId)
     })
   }
   /////////////////
@@ -327,26 +332,66 @@ app.controller('MainController', ['$http', function($http){
   /////////////////
   // function to toggle display of filled heart
   /////////////////
+  // this.ngLikes =
+  // if (user.moviesLiked === undefined) {
+  //   console.log('movie undefined');
+  // } else if (finalCheck.find(movie => movie.imdbID === movieId)) {
+  //     console.log(movie);
+  //     console.log('empty');
+  //     heart.addClass("empty");
+  //     heart.removeClass("filled")
+  //   } else {
+  //     console.log(movie);
+  //
+  //     console.log('filled');
+  //     heart.removeClass("empty");
+  //     heart.addClass("filled");
+  //   }
+  // }
+  /////////////////
+  // function to get intial likes
+  /////////////////
 
   this.getLikes = (user, movieId) => {
-    if (user.moviesLiked === undefined) {
-      console.log('movie undefined');
-      return;
+    this.regrabUser(controller.updatedUser._id);
+    let localUser = controller.updatedUser
+    let finalCheck = localUser.moviesLiked;
+    if (finalCheck.some(movie => movie.imdbID === movieId)) {
+      let heart = angular.element(document.querySelectorAll('#heart'));
+      heart.removeClass("empty");
+      heart.addClass("filled");
+      // return true
     } else {
-      this.checkArray = user.moviesLiked;
-      if (this.checkArray.some(movie => movie.imdbID === movieId)){
-        return 'filled'
-      } else {
-        return 'toggle'
+      let heart = angular.element(document.querySelectorAll('#heart'));
+      heart.addClass("empty");
+      heart.removeClass("filled")
+        // return false
       }
-    }
   }
 
   /////////////////
+  // function to verify and correct likes
+  /////////////////
+  this.isLiked = (user, movieId) => {
+    this.regrabUser(controller.updatedUser._id);
+    let localUser = controller.updatedUser
+    let finalCheck = localUser.moviesLiked;
+    if (finalCheck.find(movie => movie.imdbID === movieId)) {
+        let heart = angular.element(document.querySelectorAll('#heart'));
+        heart.addClass("filled");
+        this.heartFilled = true;
+      } else {
+        this.heartFilled = false;
+        let heart = angular.element(document.querySelectorAll('#heart'));
+        heart.addClass("empty");
+      }
+  }
+  /////////////////
   // function to add likes to moviesLiked
   /////////////////
-
   this.addLikes = (user, movieObject) => {
+    let heart = angular.element(document.querySelectorAll('#heart'));
+    let movieId = movieObject.imdbID
     $http({
       method:'PUT',
       url:'/users/'+ user._id + '/' + movieObject.imdbID,
@@ -355,8 +400,46 @@ app.controller('MainController', ['$http', function($http){
       }
     }).then( response => {
       this.getInfo(movieObject.imdbID)
-    })
+      this.isLiked(controller.updatedUser, movieId)
+      })
+    }
+    /////////////////
+    // function to remove likes to moviesLiked
+    /////////////////
+  this.decLikes = (user, movieObject) => {
+    let movieId = movieObject.imdbID;
+    $http({
+      method:'PUT',
+      url:'/users/'+ user._id + '/' + movieObject.imdbID,
+      data: {
+        movie: movieObject
+      }
+    }).then( response => {
+      this.getInfo(movieObject.imdbID)
+      this.isLiked(controller.updatedUser, movieId)
+      })
   }
+  /////////////////
+  // function to choose the path
+  /////////////////
+  this.toggleLikes = (user, movieObject) => {
+    let movieId = movieObject.imdbID
+    if (user.moviesLiked === undefined) {
+      console.log('movie undefined');
+      return;
+    } else {
+      let checkArray = user.moviesLiked;
+      if (checkArray.some(movie => movie.imdbID === movieId)){
+        checkArray = [];
+        this.decLikes(user, movieObject)
+        }
+        else {
+          checkArray = [];
+          this.addLikes(user, movieObject)
+      }
+    }
+  }
+
   /////////////////
   // function to toggle display of profile
   /////////////////
@@ -377,7 +460,7 @@ app.controller('MainController', ['$http', function($http){
       this.topMovies = [];
       while (this.topMovies.length < 5){
         let topLikes = 0;
-        let topMovie = {};
+        // let topMovie = {};
         let topMovieIndex;
         for (movie in movieList){
           let currentLikes = movieList[movie].likes;

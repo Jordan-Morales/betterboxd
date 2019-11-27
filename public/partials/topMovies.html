@@ -4,7 +4,7 @@
   <div>
     <ul>
       <li ng-repeat="movie in ctrl.topMovieDetails">
-        <img ng-click="ctrl.getInfo(movie.imdbID)" ng-src={{movie.Poster}} ng-click="main.getInfo(movie.title)" class="animated tada"/>
+        <img ng-click="ctrl.getInfo(movie.imdbID)" ng-src={{movie.Poster}} ng-click="ctrl.getInfo(movie.title)" class="animated tada"/>
       </li>
     </ul>
 
