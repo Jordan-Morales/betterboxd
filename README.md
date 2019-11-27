@@ -21,17 +21,17 @@ Movie View Logged In
 ## Project Summary
 In this project we sought out to develop a clone of letterboxd.
 
-- Groups Announced.
-- Day 0: discussing ideas and personal brainstorming time.
-- Assignment assigned.
-- Day 1: met, plan, mapped out all basic routes and functions.
-- Day 2: Finished writing MVP functionality and started stretch goals.
-- Day 3: Finished out all functionality and some stretch goals, collaborated and decided on a frontend.
-- Day 4: Primary frontend put together, various individual refinements
-- Day 5: Front end touched up, various individual refinements
-- Day 6:
-- Day 7:
-- Presentation on Day 8
+  * Groups Announced.
+* Day 0: Discussing ideas and personal brainstorming time.
+  * Assignment assigned.
+* Day 1: met, plan, mapped out all basic routes and functions.
+* Day 2: Finished writing MVP functionality and started stretch goals.
+* Day 3: Finished out all functionality and some stretch goals, collaborated and decided on a frontend.
+* Day 4: Primary frontend put together, various individual refinements
+* Day 5: Front end touched up, various individual refinements
+* Day 6: Touching up various items. Still fighting the heart.
+* Day 7: The fight was won, the app complete, they rested.
+  * Presentation on Day 8
 
 Our group did a mixed amount of pair, group programming, and individual coding.
 
@@ -78,4 +78,4 @@ We frequently needed our Friend Console.Log
 Console.Log on startup during testing
 
 <img src="public/localimg/working.gif?raw=true" width="400px">
-Make a simple heart we said...
+Make a simple heart we said....
