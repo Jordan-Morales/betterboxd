@@ -70,8 +70,12 @@ We frequently maintained contact on Zoom during the main chunk of our coding tim
 ##Unsolved Problems / Challenges
 >We wanted a heart to be filled in when the movie is liked and to be emptied/blacked-out when unliked, we got the functionality to work a little bit, but not the way we visioned.
 
-![We frequently needed our Friend ConsoleLog](https://res.cloudinary.com/htc0pkenr/image/upload/v1574808307/ConsoleLogFriend.gif)
-We frequently needed our Friend ConsoleLog
 
-![Make a simple heart we said...](https://res.cloudinary.com/htc0pkenr/image/upload/v1574808328/LikeHeart.gif)
+<img src="public/localimg/consolelog.gif?raw=true" width="400px">
+We frequently needed our Friend Console.Log
+
+<img src="public/localimg/logstart.gif?raw=true" width="400px">
+Console.Log on startup during testing
+
+<img src="public/localimg/working.gif?raw=true" width="400px">
 Make a simple heart we said...
