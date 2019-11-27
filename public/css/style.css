@@ -110,7 +110,7 @@ button:hover, input[type="submit"]:hover {background-color: var(--lightBlue); co
 
 
 img {
-  box-shadow: 4px 4px grey;
+  box-shadow: 2px 2px rgba(155, 166, 194, 0.8);
 }
 
 
