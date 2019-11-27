@@ -63,17 +63,11 @@ movies.put('/:id/newcomment', (req, res) => {
 
 // Increasing Likes / Create Create Movie in Database, if not already there
 movies.put('/:id/addlikes', (req, res) => {
-  Movie.find({omdbID:req.params.id}, (error, foundMovie) => {
-    if (foundMovie[0] === undefined) {
-      Movie.create(req.body, (error, createdMovie) => {
-      })
-    } else {
       Movie.findOneAndUpdate({omdbID:req.params.id}, {$inc:{likes: 1 }}, {new:true}, (error, updatedMovie) => {
         res.json(updatedMovie);
       })
-    }
   })
-})
+
 
 // Decreasing Likes
 movies.put('/:id/declikes', (req, res) => {
